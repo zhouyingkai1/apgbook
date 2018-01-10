@@ -5,7 +5,7 @@ import pxToDp from './pxToDp';
 
 export default {
   //mainThemeColor: favoriteColor,
-  mainColor: '#333',
+  mainColor: '#f6c243',
   grayFont: '#999',
   themeColor: '#e72b2b',
   pageBackgroundColor: '#fbfcfd',

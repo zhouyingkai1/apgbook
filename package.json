@@ -7,7 +7,7 @@
     "test": "jest",
     "prettier": "prettier --write --single-quote --no-semi --trailing-comma es5 --print-width 80 \"app/**/*.js\"",
     "lint": "eslint app",
-    "format": "yarn prettier && yarn lint -- --fix",
+    "format": "yarn prettier && yarn lint -- --fix"
   },
   "dependencies": {
     "dva-core": "^1.1.0",
@@ -16,6 +16,7 @@
     "react-native-drawer": "^2.5.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-root-toast": "^3.0.0",
+    "react-native-swiper": "^1.5.13",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",

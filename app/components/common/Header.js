@@ -19,7 +19,6 @@ import Toast from 'react-native-root-toast'
  **/
 const Header = (props)=> {
   const {title, backTitle, right, left} = props
-  console.log(right,'right')
   const handlelogin = ()=> {
     props.dispatch({
       type: 'app/updateState',
@@ -37,7 +36,7 @@ const Header = (props)=> {
       {
         props.router.index > 0? 
           <TouchableOpacity style={styles.left} onPress={()=> props.navigation.goBack()}>
-            <Icon name="arrow-left" size={pxToDp(40)} color={'#fff'} />
+            <Icon name="arrow-left" style={styles.noneBg} size={pxToDp(40)} color={'#fff'} />
           </TouchableOpacity>
         : 
           <View>
@@ -50,7 +49,7 @@ const Header = (props)=> {
                 </TouchableOpacity>
                 :
                 <TouchableOpacity style={[styles.left, {marginLeft: pxToDp(20)}]} onPress={()=> handlelogin()}>
-                  <FontIcon name="user-circle" size={pxToDp(46)} color={'#aaa'} />
+                  <FontIcon style={styles.noneBg} name="user-circle" size={pxToDp(46)} color={'#aaa'} />
                 </TouchableOpacity>
             }
             </View>
@@ -66,7 +65,7 @@ const Header = (props)=> {
         </View>
         <View style={styles.right}>
           {right? right : 
-            <EvilIcons onPress={()=> Toast.show('search')} style={{transform: [{rotate: '90deg'}]}} name="search" size={pxToDp(60)} color={'#aaa'} />
+            <EvilIcons onPress={()=> Toast.show('search')} style={[{transform: [{rotate: '90deg'}]},styles.noneBg]} name="search" size={pxToDp(60)} color={'#aaa'} />
           }
         </View>
       </LinearGradient>
@@ -109,6 +108,9 @@ const styles = StyleSheet.create({
   logo: {
     width: pxToDp(98),
     height: pxToDp(54)
+  },
+  noneBg: {
+    backgroundColor: 'rgba(0,0,0,0)'
   }
 });
 

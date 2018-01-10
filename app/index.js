@@ -6,10 +6,11 @@ import Router from './router'
 
 import appModel from './models/app'
 import routerModel from './models/router'
+import homeModel from './models/homeModel'
 
 const app = dva({
   initialState: {},
-  models: [appModel, routerModel],
+  models: [appModel, routerModel, homeModel],
   onError(e) {
     console.log('onError', e)
   },

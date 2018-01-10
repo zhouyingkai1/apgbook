@@ -35,7 +35,14 @@ function handleError(error) {
  */
 export default function request(url, options) {
   url  = /http:\\/.test(url) ? url : pathInterceptor.request(url)
-  return fetch(url, options)
+  console.log(options,'dd')
+  return fetch(url, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify(options.body),
+    method: options.method,
+  })
   .then(checkStatus)
   .then(parseJSON)
   .then(data => (data))

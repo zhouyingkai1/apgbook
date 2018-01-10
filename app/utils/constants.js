@@ -1,6 +1,6 @@
 module.exports={
-  host: 'http://dayour.mizholdings.com:8080/mizhu',
+  host: 'http://www.apgbook.com',
   // path: 'ywjphp'
   // host: 'http://localhost:3000',
-  path: ''
+  path: '/ts'
 }
