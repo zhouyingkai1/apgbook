@@ -33,42 +33,44 @@ const Header = (props)=> {
       colors={['#2b2a31', '#38373d',]} style={styles.header}
       >
       <StatusBar barStyle='light-content'/>
-      {
-        props.router.index > 0? 
-          <TouchableOpacity style={styles.left} onPress={()=> props.navigation.goBack()}>
-            <Icon name="arrow-left" style={styles.noneBg} size={pxToDp(40)} color={'#fff'} />
-          </TouchableOpacity>
-        : 
-          <View>
-            {
-              props.app.login?
-                <TouchableOpacity style={[styles.left, {marginLeft: pxToDp(20)}]} onPress={()=> props.navigation.navigate('DrawerOpen')}>
-                  <Image 
-                  source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
-                  style={styles.avatar}/>
-                </TouchableOpacity>
-                :
-                <TouchableOpacity style={[styles.left, {marginLeft: pxToDp(20)}]} onPress={()=> handlelogin()}>
-                  <FontIcon style={styles.noneBg} name="user-circle" size={pxToDp(46)} color={'#aaa'} />
-                </TouchableOpacity>
-            }
-            </View>
+      <View style={{flex: 1, paddingLeft: pxToDp(20)}}>
+        {
+          props.router.index > 0? 
+            <TouchableOpacity style={styles.left} onPress={()=> props.navigation.goBack()}>
+              <Icon name="arrow-left" style={[styles.noneBg,{position: 'relative', left: -pxToDp(8)}]} size={pxToDp(40)} color={'#fff'} />
+            </TouchableOpacity>
+          : 
+            <View>
+              {
+                props.app.login?
+                  <TouchableOpacity style={[styles.left]} onPress={()=> props.navigation.navigate('DrawerOpen')}>
+                    <Image 
+                    source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
+                    style={styles.avatar}/>
+                  </TouchableOpacity>
+                  :
+                  <TouchableOpacity style={[styles.left]} onPress={()=> handlelogin()}>
+                    <FontIcon style={styles.noneBg} name="user-circle" size={pxToDp(46)} color={'#aaa'} />
+                  </TouchableOpacity>
+              }
+              </View>
+          }
+      </View>
+      <View style={styles.title}>
+        {
+          title? <Text style={[styles.titleTxt, styles.txt]}>{title}</Text>
+          :
+          <Image 
+            source={require('../../images/logo.png')}
+            style={styles.logo}/>
         }
-        <View style={styles.title}>
-          {
-            title? <Text style={[styles.titleTxt, styles.txt]}>{title}</Text>
-            :
-            <Image 
-              source={require('../../images/logo.png')}
-              style={styles.logo}/>
-          }
-        </View>
-        <View style={styles.right}>
-          {right? right : 
-            <EvilIcons onPress={()=> Toast.show('search')} style={[{transform: [{rotate: '90deg'}]},styles.noneBg]} name="search" size={pxToDp(60)} color={'#aaa'} />
-          }
-        </View>
-      </LinearGradient>
+      </View>
+      <View style={styles.right}>
+        {right? right : 
+          <EvilIcons onPress={()=> Toast.show('search')} style={[{transform: [{rotate: '90deg'}]},styles.noneBg]} name="search" size={pxToDp(60)} color={'#aaa'} />
+        }
+      </View>
+    </LinearGradient>
   )
 };
 
@@ -80,17 +82,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   left: {
-    width: pxToDp(60),
     justifyContent: 'center',
-    alignItems: 'center'
   },
   right: {
-    width: pxToDp(80),
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
+    flex: 1,
+    paddingRight: pxToDp(20)
   },
   title: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     borderRadius: pxToDp(30),
   },
   txt: {
-    color: '#fff'
+    color: '#fff',
+    backgroundColor: 'rgba(0,0,0,0)'
   },
   titleTxt: {
     fontSize: pxToDp(36),

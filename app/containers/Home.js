@@ -61,7 +61,7 @@ class Home extends Component {
           <View style={[{flex: 1}]}>
             <HomeItem title='热门推荐' type={1} data={data.type1} {...this.props}/>
             <HomeItem title='最新推荐' type={2} data={data.type2} {...this.props}/>
-            <HomeItem title='免限推荐' type={3} data={data.type3} {...this.props}/>
+            <HomeItem title='免限推荐' type={5} data={data.type3} {...this.props}/>
           </View>
         </ScrollView>
       </View>

@@ -17,6 +17,7 @@ import Category from './containers/Category'
 import Press from './containers/Press'
 import Rank from './containers/Rank'
 import Detail from './page/Detail'
+import Bookshelf from './page/Bookshelf'
 
 const HomeNavigator = TabNavigator(
   {
@@ -88,6 +89,7 @@ const AppNavigator = StackNavigator({
       // }
     },
     Login: { screen: Login },
+    Bookshelf: { screen: Bookshelf },
 },  {
   navigationOptions: {
     header: null

@@ -8,11 +8,14 @@ import Header from './common/Header'
 import HomeItem from './home/HomeItem'
 //分类组件
 import TagItem from './category/TagItem'
+//书架
+import BookItem from './bookshelf/BookItem'
 module.exports={
   TextButton,
   Touchable,
   Button,
   Header,
   HomeItem,
-  TagItem
+  TagItem,
+  BookItem
 }

@@ -9,10 +9,11 @@ import routerModel from './models/router'
 import homeModel from './models/homeModel'
 import categoryModel from './models/categoryModel'
 import rankModel from './models/rankModel'
+import bookshelfModel from './models/bookshelfModel'
 
 const app = dva({
   initialState: {},
-  models: [appModel, routerModel, homeModel, categoryModel, rankModel],
+  models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel],
   onError(e) {
     console.log('onError', e)
   },

@@ -18,11 +18,14 @@ const HomeItem = (props)=> {
     )
   }
   const _keyExtractor = (item, index) => item.bookId
+  const goListPage = ()=> {
+    props.navigation.navigate('Bookshelf', {type, rank: 1, title})
+  }
   return (
     <View style={styles.container}> 
       <View style={styles.head}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity style={styles.more}>
+        <TouchableOpacity onPress={goListPage} style={styles.more}>
           <Text style={{color: '#999', fontSize: pxToDp(30)}}>更多 <Icon color={'#999'} name='arrow-right' size={pxToDp(26)}/></Text>
         </TouchableOpacity>
         <View style={styles.line}></View>
