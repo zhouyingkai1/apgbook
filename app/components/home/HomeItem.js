@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import pxToDp from '../../utils/pxToDp'
-import TextButton from '../common/TextButton'
 const HomeItem = (props)=> {
   const {title, type, data} = props
   const renderItem = ({item})=> {
