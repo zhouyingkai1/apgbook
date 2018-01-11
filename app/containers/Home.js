@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
 import { Header, HomeItem } from '../components'
@@ -25,26 +25,45 @@ class Home extends Component {
   handlePress = ()=> {
     this.props.navigation.navigate('Login')
   }
-  componentDidMount() {
-  
- }
+  onRefresh = ()=> {
+    this.props.dispatch({
+      type: 'home/update',
+      payload: {
+        isRefreshing: true
+      }
+    })
+    this.props.dispatch({type: 'home/getBookData'})
+  }
   render() {
-    const {data} = this.props.home
-    return (
+    const {data, isRefreshing} = this.props.home
+    return ( 
       <View style={styles.container}>
-        <Header {...this.props}/>
-        <Swiper dotColor={'white'} 
-            activeDotColor={theme.mainColor} 
-            autoplay={true} 
-            style={{height: pxToDp(268)}}
-            paginationStyle={{position:'absolute',bottom: pxToDp(20), justifyContent: 'flex-end', right: pxToDp(20)}}
-          >
-          <Image resizeMode='cover' style={styles.banner} source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg'}} />
-          <Image resizeMode='cover' style={styles.banner} source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg'}} />
-        </Swiper>
-        <View style={[{flex: 1}]}>
-          <HomeItem title='热门推荐' type={1} data={data.type1} {...this.props}/>
-        </View>
+        <Header {...this.props}/> 
+        <ScrollView 
+           refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor={theme.mainColor}
+              progressBackgroundColor="#ffff00" 
+            />
+          }
+        >
+          <Swiper dotColor={'white'}  
+              activeDotColor={theme.mainColor} 
+              autoplay={true} 
+              style={{height: pxToDp(268)}}
+              paginationStyle={{position:'absolute',bottom: pxToDp(20), justifyContent: 'flex-end', right: pxToDp(20)}}
+            >
+            <Image resizeMode='cover' style={styles.banner} source={require('../images/banner.jpg')} />
+            <Image resizeMode='cover' style={styles.banner} source={require('../images/banner.jpg')} />
+          </Swiper>
+          <View style={[{flex: 1}]}>
+            <HomeItem title='热门推荐' type={1} data={data.type1} {...this.props}/>
+            <HomeItem title='最新推荐' type={2} data={data.type2} {...this.props}/>
+            <HomeItem title='免限推荐' type={3} data={data.type3} {...this.props}/>
+          </View>
+        </ScrollView>
       </View>
     )
   }

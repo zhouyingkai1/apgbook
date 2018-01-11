@@ -6,7 +6,6 @@ import TextButton from '../common/TextButton'
 const HomeItem = (props)=> {
   const {title, type, data} = props
   const renderItem = ({item})=> {
-    console.log(item,'items')
     return (
       <TouchableOpacity activeOpacity={0.7} style={styles.item}>
         <View style={styles.shadow}>
@@ -81,16 +80,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   shadow: {
-    shadowColor:'#ccc',
-    shadowOffset:{width: 2, height: 3},
-    shadowRadius:8,
-    shadowOpacity:1,
+    shadowColor:'#ccc', 
+    shadowOffset:{width: pxToDp(3), height: pxToDp(2)},
+    shadowRadius: pxToDp(7),
+    shadowOpacity: 1,
   }, 
   bookName: {
     fontSize: pxToDp(29),
     lineHeight: pxToDp(46)
   },
-  free: {
+  free: { 
     color: '#fff',
     fontSize: pxToDp(30),
   },

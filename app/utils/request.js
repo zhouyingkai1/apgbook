@@ -35,7 +35,6 @@ function handleError(error) {
  */
 export default function request(url, options) {
   url  = /http:\\/.test(url) ? url : pathInterceptor.request(url)
-  console.log(options,'dd')
   return fetch(url, {
     headers: {
       'Content-Type': 'application/json'
