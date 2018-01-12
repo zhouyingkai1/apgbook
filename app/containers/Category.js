@@ -22,7 +22,7 @@ class Category extends Component {
     return <TagItem itemData={item} {...this.props}/>
   }
   renderHeader = ()=> {
-    return <TagItem itemData={{name: '全部', subCategoryDtos:[{uid: 0, name: '全部图书'}]}} {...this.props}/>
+    return <TagItem itemData={{name: '全部', subCategoryDtos:[{uid: 1, name: '全部图书'}]}} {...this.props}/>
   }
   render() {
     const { data } = this.props.category 

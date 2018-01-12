@@ -5,7 +5,6 @@ import pxToDp from '../../utils/pxToDp'
 const TagItem = (props)=> {
   const {itemData} = props
   const goToBookshelf = (item)=> {
-    console.log(1)
     requestAnimationFrame(() =>{
       props.navigation.navigate('Bookshelf', {category: 1, categoryId: item.uid, title: item.name})
     })

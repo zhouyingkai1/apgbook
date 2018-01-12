@@ -2,9 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import pxToDp from '../../utils/pxToDp'
 
-const TextButton = ({ text, textStyle, btnStyle }) => (
-  <TouchableOpacity style={btnStyle}>
+const TextButton = ({ text, textStyle, btnStyle, Child, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={btnStyle}>
     <Text style={[styles.text, textStyle]}>{text}</Text>
+    {Child&&<Child />}
   </TouchableOpacity>
 )
 
