@@ -3,6 +3,7 @@ import Touchable from './common/Touchable'
 import TextButton from './common/TextButton'
 import Button from './common/Button'
 import Header from './common/Header'
+import Loading from './common/Loading'
 
 //首页组件
 import HomeItem from './home/HomeItem'
@@ -17,5 +18,6 @@ module.exports={
   Header,
   HomeItem,
   TagItem,
-  BookItem
+  BookItem,
+  Loading
 }

@@ -36,7 +36,7 @@ const Header = (props)=> {
       <View style={{flex: 1, paddingLeft: pxToDp(20)}}>
         {
           props.router.index > 0? 
-            <TouchableOpacity style={styles.left} onPress={()=> props.navigation.goBack()}>
+            <TouchableOpacity style={styles.left} onPress={()=> requestAnimationFrame(()=> props.navigation.goBack())}>
               <Icon name="arrow-left" style={[styles.noneBg,{position: 'relative', left: -pxToDp(8)}]} size={pxToDp(40)} color={'#fff'} />
             </TouchableOpacity>
           : 

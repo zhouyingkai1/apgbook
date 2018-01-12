@@ -4,6 +4,12 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import pxToDp from '../../utils/pxToDp'
 const TagItem = (props)=> {
   const {itemData} = props
+  const goToBookshelf = (item)=> {
+    console.log(1)
+    requestAnimationFrame(() =>{
+      props.navigation.navigate('Bookshelf', {category: 1, categoryId: item.uid, title: item.name})
+    })
+  }
   return (
     <View> 
       {
@@ -15,7 +21,7 @@ const TagItem = (props)=> {
           <View style={styles.tagBox}>
             {
               itemData.subCategoryDtos.map((item, index)=> (
-                <TouchableOpacity activeOpacity={0.6} style={styles.tag} key={index} >
+                <TouchableOpacity onPress={()=> goToBookshelf(item)} activeOpacity={0.6} style={styles.tag} key={index} >
                   <Text style={{color: '#000', fontSize: pxToDp(29)}}>{item.name}</Text>
                 </TouchableOpacity>
               ))

@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
     paddingBottom: pxToDp(15),
     paddingLeft: pxToDp(30),
     paddingRight: pxToDp(15),
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
     backgroundColor: '#ffbf01',
   },
   bookName: {

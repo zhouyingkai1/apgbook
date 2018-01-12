@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, InteractionManager } from 'react-native'
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import pxToDp from '../../utils/pxToDp'
 const HomeItem = (props)=> {
@@ -18,8 +18,10 @@ const HomeItem = (props)=> {
     )
   }
   const _keyExtractor = (item, index) => item.bookId
-  const goListPage = ()=> {
-    props.navigation.navigate('Bookshelf', {type, rank: 1, title})
+  const goListPage = ()=> { 
+    requestAnimationFrame(() =>{
+      props.navigation.navigate('Bookshelf', {type, rank: 1, title})
+    })
   }
   return (
     <View style={styles.container}> 
