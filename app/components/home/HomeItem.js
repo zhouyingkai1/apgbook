@@ -6,7 +6,7 @@ const HomeItem = (props)=> {
   const {title, type, data} = props
   const renderItem = ({item})=> {
     return (
-      <TouchableOpacity activeOpacity={0.7} style={styles.item}>
+      <TouchableOpacity onPress={()=> requestAnimationFrame(() => props.navigation.navigate('BookDetail', {bookId: item.bookId}))} activeOpacity={0.7} style={styles.item}>
         <View style={styles.shadow}>
           <Image style={styles.bookImg} source={{uri: item.bookCover + '@174w'}}/>
         </View>

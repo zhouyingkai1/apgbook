@@ -122,12 +122,13 @@ class Bookshelf extends Component {
     }
     const {orderBy} = this.props.bookshelf
     this.update('orderType', orderType)
-    orderType == 4 && this.update('orderBy', Number(!orderBy))
+    orderType == 4 && type ==4 && this.update('orderBy', Number(!orderBy))
     this.queryCategoryBook(1)
   }
-  child = ()=> (
-    <Icon name='md-arrow-dropdown' size={pxToDp(20)}/>
-  )
+  child = ()=> {
+    const {orderType, orderBy} = this.props.bookshelf
+    return <Icon name={orderBy? 'md-arrow-dropup': 'md-arrow-dropdown'} style={{marginLeft: pxToDp(6)}} color={orderType==4? '#000': '#b1b1b1'} size={pxToDp(20)}/>
+  }
   render() {
     const {params} = this.props.navigation.state
     const {data, isRefreshing, current, total, isLoading, orderType} = this.props.bookshelf
@@ -138,7 +139,7 @@ class Bookshelf extends Component {
           <TextButton onPress={()=> this.changeSort(1)} text='最热' btnStyle={{marginRight: pxToDp(60)}} textStyle={{color: orderType == 1? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
           <TextButton onPress={()=> this.changeSort(2)} text='最新' btnStyle={{marginRight: pxToDp(60)}} textStyle={{color: orderType == 2? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
           <TextButton onPress={()=> this.changeSort(3)} text='销量' btnStyle={{marginRight: pxToDp(60)}} textStyle={{color: orderType == 3? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
-          <TextButton Child={this.child} onPress={()=> this.changeSort(4)} text='价格' btnStyle={{flexDirection: 'row', marginRight: pxToDp(60)}} textStyle={{color: orderType == 4? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
+          <TextButton Child={this.child} onPress={()=> this.changeSort(4)} text='价格' btnStyle={{flexDirection: 'row', alignItems: 'center', marginRight: pxToDp(60)}} textStyle={{color: orderType == 4? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
         </View>
         {
           isLoading?

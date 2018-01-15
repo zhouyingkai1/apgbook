@@ -4,7 +4,7 @@ import TextButton from './common/TextButton'
 import Button from './common/Button'
 import Header from './common/Header'
 import Loading from './common/Loading'
-
+import Alert from './common/Alert'
 //首页组件
 import HomeItem from './home/HomeItem'
 //分类组件
@@ -19,5 +19,6 @@ module.exports={
   HomeItem,
   TagItem,
   BookItem,
-  Loading
+  Loading,
+  Alert
 }
