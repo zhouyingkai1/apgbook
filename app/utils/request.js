@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-
+import { default as Storage } from './storage'
 import pathInterceptor from './pathInterceptor';
 function parseJSON(response) {
   return  JSON.parse(response._bodyText) 
@@ -33,13 +33,17 @@ function handleError(error) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default function request(url, options) {
+export default async function request(url, options) {
+  const tsToken = await Storage.get('ts-token')
+  const tsUid = await Storage.get('ts-uid')
   url  = /http:\\/.test(url) ? url : pathInterceptor.request(url)
   return fetch(url, {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'ts-token': tsToken || '',
+      'ts-uid': tsUid || '',
     },
-    body:JSON.stringify(options.body),
+    body: JSON.stringify(options.body),
     method: options.method,
   })
   .then(checkStatus)

@@ -34,6 +34,8 @@ export default {
   subscriptions: {
     setup({ dispatch }) {
       dispatch({ type: 'loadStorage' })
+      Storage.set('ts-token', 'd6b1c0e0b5bad3ce18f4b10aabefbc2a')
+      Storage.set('ts-uid', '365374576770')
     },
   },
 }

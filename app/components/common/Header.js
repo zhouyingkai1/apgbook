@@ -66,7 +66,7 @@ const Header = (props)=> {
         }
       </View>
       <View style={styles.right}>
-        {right? right : 
+        {right? right() : 
           <EvilIcons onPress={()=> Toast.show('search')} style={[{transform: [{rotate: '90deg'}]},styles.noneBg]} name="search" size={pxToDp(60)} color={'#aaa'} />
         }
       </View>

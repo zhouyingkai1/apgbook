@@ -5,6 +5,7 @@ import Button from './common/Button'
 import Header from './common/Header'
 import Loading from './common/Loading'
 import Alert from './common/Alert'
+import TabView from './common/TabView'
 //首页组件
 import HomeItem from './home/HomeItem'
 //分类组件
@@ -20,5 +21,6 @@ module.exports={
   TagItem,
   BookItem,
   Loading,
-  Alert
+  Alert,
+  TabView
 }
