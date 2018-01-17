@@ -116,14 +116,16 @@ class Bookshelf extends Component {
     )
   }
   changeSort = (orderType)=> {
-    const {orderType: type} = this.props.bookshelf
-    if(orderType == type && orderType!= 4){
-      return
-    }
-    const {orderBy} = this.props.bookshelf
-    this.update('orderType', orderType)
-    orderType == 4 && type ==4 && this.update('orderBy', Number(!orderBy))
-    this.queryCategoryBook(1)
+    requestAnimationFrame(()=> {
+      const {orderType: type} = this.props.bookshelf
+      if(orderType == type && orderType!= 4){
+        return
+      }
+      const {orderBy} = this.props.bookshelf
+      this.update('orderType', orderType)
+      orderType == 4 && type ==4 && this.update('orderBy', Number(!orderBy))
+      this.queryCategoryBook(1)
+    })
   }
   child = ()=> {
     const {orderType, orderBy} = this.props.bookshelf

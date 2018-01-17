@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView, Animated, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
-import {Header, Alert, TabView} from '../components'
+import {Header, Alert, TabView, BookMenu} from '../components'
 import Toast from 'react-native-root-toast'
 import theme from '../utils/theme'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -32,22 +32,27 @@ class BookDetail extends Component {
         }
       })
     }
+    this.update('tab', 0)
   }
   async componentDidMount() { 
     const {bookInfo, bookId: oldBookId} = this.props.bookdetail
     const { bookId } = this.props.navigation.state.params
+    // 取书本详情
     const oldBookInfo = await Storage.get(`bookInfo${bookId}`)
     if(!oldBookInfo) {
       this.fetchData('getBookInfo', {bookId})
     }else{
       bookId != oldBookId && this.update('bookInfo', oldBookInfo)
     }
+    //从缓存中取 热门书籍 
     const hotBook = await Storage.get(`hotBook`)
     if(!hotBook) {
       this.fetchData('getHotBook', {type: [1], number: [12]})
     }else {
       this.update('hotBook', hotBook)
     }
+    //请求 目录
+    this.fetchData('getBookMenu', {book_uid: bookId})
   }
   update = (name, val)=> {
     this.props.dispatch({
@@ -114,6 +119,7 @@ class BookDetail extends Component {
         this.update('bookInfo', bookInfo)
       }
     }
+    this.fetchData('getBookMenu', {book_uid: newBook.bookId})
     this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
   }
   onRefresh = ()=> {
@@ -122,7 +128,7 @@ class BookDetail extends Component {
   }
   render() {
     const {params} = this.props.navigation.state
-    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing} = this.props.bookdetail
+    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu} = this.props.bookdetail
     const hotBookList = hotBook.slice(hotBookIndex * 3, (hotBookIndex+1)*3)
     return (
       <View style={{flex: 1}}>
@@ -184,7 +190,7 @@ class BookDetail extends Component {
                   duration: 400,
               }).start();
               }} 
-              tabs={['简介', '目录', `评论(${bookInfo.commentNum})`]}
+              tabs={['简介', `目录(${menu.length})`, `评论(${bookInfo.commentNum})`]}
               activeTextColor='#f6c243'
               textStyle={{}}
               underlineStyle={{backgroundColor: '#f6c243'}}
@@ -194,7 +200,12 @@ class BookDetail extends Component {
               <View style={[styles.tabCommon]}><Text style={{lineHeight: pxToDp(45), fontSize: pxToDp(30)}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{bookInfo.description}</Text></View>}
             {tab == 1? 
               <View>
-                <Text>目录</Text>
+                <BookMenu menu={menu} {...this.props}/>
+                {
+                  menu.length>6&&<TouchableOpacity activeOpacity={0.6} style={{ marginBottom: pxToDp(30), alignItems: 'center'}}>
+                    <Text style={{color: '#999'}}>更多目录>></Text>
+                  </TouchableOpacity>
+                }
               </View>: null}
             {tab == 2? 
               <View>

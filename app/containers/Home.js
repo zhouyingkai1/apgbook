@@ -18,7 +18,7 @@ class Home extends Component {
     super(props);
     this.state = {
     };
- }
+  }
   openDrawer = ()=> {
     this.props.navigation.navigate('Login')
   }

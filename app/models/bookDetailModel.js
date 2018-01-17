@@ -12,7 +12,8 @@ export default {
     tab: 0,
     hotBook: [],
     hotBookIndex: 0,
-    isRefreshing: false
+    isRefreshing: false,
+    menu: []
   },
   reducers: {
     update(state, { payload }) {
@@ -45,6 +46,17 @@ export default {
         Storage.set(`hotBook`, result.data.type1)
       }
     },
+    *getBookMenu({payload}, { call, put }) {
+      const result = yield call(bookDetailServices.getMenu, payload)
+      if(result.code == '000') {
+        yield put({
+          type: 'update',
+          payload: { 
+            menu: result.data
+          }
+        })
+      }
+    },
     *hanldeCollect({payload}, { call, put }) {
       let {bookInfo} = payload
       let result
@@ -62,9 +74,7 @@ export default {
             bookInfo: bookInfo
           }
         })
-        Storage.set(`bookInfo(${payload,bookInfo.bookId})`, bookInfo)
-      }else{
-
+        Storage.set(`bookInfo(${bookInfo.bookId})`, bookInfo)
       }
     },
   },
