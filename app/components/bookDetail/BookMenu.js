@@ -1,39 +1,28 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import pxToDp from '../../utils/pxToDp'
+import Icon from 'react-native-vector-icons/Ionicons'
 const BookMenu = (props)=> {
-  const {menu} = props
-  let menuList = menu.slice(0,6)
+  const {item, index} = props
   return (
-    <View style={styles.container}>
+    <View> 
+      <TouchableOpacity activeOpacity={0.6} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} >
+        <Text numberOfLines={1} style={{color: !item.free?'#999':'#333', fontSize: pxToDp(30), lineHeight: pxToDp(66)}}>{item.title}</Text>
+        {!item.free&&<Icon name='ios-lock-outline' color='#333' size={20}/>}
+      </TouchableOpacity>
       {
-        menuList.map((item,index)=> {
-          return (
-            <View key={index}> 
-              <TouchableOpacity activeOpacity={0.6} >
-                <Text numberOfLines={1} style={{color: '#333', fontSize: pxToDp(30), lineHeight: pxToDp(66)}}>{item.title}</Text>
-              </TouchableOpacity>
-              {
-                item.children.map((child, i)=> (
-                  <TouchableOpacity style={{paddingLeft: pxToDp(30)}} activeOpacity={0.6} key={i}>
-                    <Text numberOfLines={1} style={{color: '#666', fontSize: pxToDp(30), lineHeight: pxToDp(66)}}>{child.title}</Text>
-                  </TouchableOpacity>
-                ))
-              }
-            </View>
-          )
-        })
-      }
+        item.children.map((child, i)=> (
+          <TouchableOpacity activeOpacity={0.6} key={i} style={{paddingLeft: pxToDp(30), flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}} >
+            <Text numberOfLines={1} style={{color: !child.free?'#999':'#666', fontSize: pxToDp(30), lineHeight: pxToDp(66)}}>{child.title.replace(/[\.]/g,'．')}</Text>
+            {!child.free&&<Icon name='ios-lock-outline' color='#666' size={20}/>}
+          </TouchableOpacity>
+        ))
+      } 
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingLeft: pxToDp(100),
-    paddingRight: pxToDp(70),
-    paddingTop: pxToDp(30),
-    paddingBottom: pxToDp(30),
-  }
+  
 })
 export default BookMenu

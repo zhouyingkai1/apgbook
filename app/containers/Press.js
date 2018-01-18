@@ -17,7 +17,7 @@ class Press extends Component {
   render() {
     return (
       <View >
-        <Header {...this.props}/>
+        <Header noBack={true} {...this.props}/>
         <Text>Press</Text>
       </View>
     )

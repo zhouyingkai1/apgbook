@@ -18,7 +18,7 @@ import Toast from 'react-native-root-toast'
  * 自定义导航
  **/
 const Header = (props)=> {
-  const {title, backTitle, right, left} = props
+  const {title, backTitle, right, left, noBack, isClose} = props
   const handlelogin = ()=> {
     props.dispatch({
       type: 'app/updateState',
@@ -35,9 +35,13 @@ const Header = (props)=> {
       <StatusBar barStyle='light-content'/>
       <View style={{flex: 1, paddingLeft: pxToDp(20)}}>
         {
-          props.router.index > 0? 
+          !noBack? 
             <TouchableOpacity style={styles.left} onPress={()=> requestAnimationFrame(()=> props.navigation.goBack())}>
-              <Icon name="arrow-left" style={[styles.noneBg,{position: 'relative', left: -pxToDp(8)}]} size={pxToDp(40)} color={'#fff'} />
+            {isClose?
+              <EvilIcons name={'close'} style={[styles.noneBg,{position: 'relative', left: -pxToDp(8)}]} size={pxToDp(60)} color={'#fff'} />
+              :
+              <Icon name={'arrow-left'} style={[styles.noneBg,{position: 'relative', left: -pxToDp(8)}]} size={pxToDp(40)} color={'#fff'} />
+            }              
             </TouchableOpacity>
           : 
             <View>

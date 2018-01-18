@@ -28,7 +28,7 @@ class Category extends Component {
     const { data } = this.props.category 
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
-       <Header {...this.props}/>
+       <Header noBack={true} {...this.props}/>
        <FlatList 
          keyExtractor = {this._keyExtractor}
          data={data}

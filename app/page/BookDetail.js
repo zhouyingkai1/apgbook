@@ -84,7 +84,7 @@ class BookDetail extends Component {
   headRight = ()=> {
     const { bookInfo } = this.props.bookdetail
     return (
-      <View style={{flexDirection: 'row', marginTop: pxToDp(28), backgroundColor: 'rgba(0,0,0,0)'}}>
+      <View style={{flexDirection: 'row', marginTop: pxToDp(20), backgroundColor: 'rgba(0,0,0,0)'}}>
         <TouchableOpacity onPress={()=> this.handleCollect(bookInfo)} style={{width: pxToDp(80), height: pxToDp(60)}}>
           <FontAwesome name={!!bookInfo.isCollect? 'star':'star-o'} style={{marginRight: pxToDp(40)}} size={pxToDp(44)} color={!!bookInfo.isCollect?'#f6c243': '#fff'}/>
         </TouchableOpacity>
@@ -130,9 +130,10 @@ class BookDetail extends Component {
     const {params} = this.props.navigation.state
     const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu} = this.props.bookdetail
     const hotBookList = hotBook.slice(hotBookIndex * 3, (hotBookIndex+1)*3)
+    let menuList = menu.slice(0,6)
     return (
       <View style={{flex: 1}}>
-        <Header right={this.headRight} title={params.title} {...this.props}/>
+        <Header  right={this.headRight} title={params.title} {...this.props}/>
         <ScrollView 
           refreshControl={
             <RefreshControl
@@ -199,10 +200,16 @@ class BookDetail extends Component {
             {tab == 0&&
               <View style={[styles.tabCommon]}><Text style={{lineHeight: pxToDp(45), fontSize: pxToDp(30)}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{bookInfo.description}</Text></View>}
             {tab == 1? 
-              <View>
-                <BookMenu menu={menu} {...this.props}/>
+              <View style={styles.menuBox}>
                 {
-                  menu.length>6&&<TouchableOpacity activeOpacity={0.6} style={{ marginBottom: pxToDp(30), alignItems: 'center'}}>
+                  menuList.map((item, index)=> (
+                    <BookMenu key={index} item={item} index={index} {...this.props}/>
+                  ))
+                }
+                {
+                  menu.length>6&&<TouchableOpacity
+                      onPress={()=> this.props.navigation.navigate('MenuDetail',{menu})}
+                      activeOpacity={0.6} style={{ marginTop: pxToDp(20), marginBottom: pxToDp(10), alignItems: 'center'}}>
                     <Text style={{color: '#999'}}>更多目录>></Text>
                   </TouchableOpacity>
                 }
@@ -358,6 +365,12 @@ const styles = StyleSheet.create({
   img: {
     width: pxToDp(420),
     height: pxToDp(120),
+  },
+  menuBox: {
+    paddingLeft: pxToDp(100),
+    paddingRight: pxToDp(70),
+    paddingTop: pxToDp(30),
+    paddingBottom: pxToDp(30),
   }
 })
 const mapStateToProps = ({app, router, bookdetail})=> {

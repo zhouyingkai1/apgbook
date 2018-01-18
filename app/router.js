@@ -19,6 +19,7 @@ import Rank from './containers/Rank'
 import Detail from './page/Detail'
 import Bookshelf from './page/Bookshelf'
 import BookDetail from './page/BookDetail'
+import MenuDetail from './page/MenuDetail'
 
 const HomeNavigator = TabNavigator(
   {
@@ -82,21 +83,59 @@ const AppDrawerNavigator = DrawerNavigator(
   },
 )
 
-const AppNavigator = StackNavigator({
-    AppDrawerNavigator: {
-      screen: AppDrawerNavigator,
-      // navigationOptions: {
-      //     header:null
-      // }
-    },
-    Login: { screen: Login },
-    Bookshelf: { screen: Bookshelf },
-    BookDetail: { screen: BookDetail },
+
+const MainNavigator = StackNavigator({
+  AppDrawerNavigator: {
+    screen: AppDrawerNavigator,
+    // navigationOptions: {
+    //     header:null
+    // }
+  },
+  Login: { screen: Login },
+  Bookshelf: { screen: Bookshelf },
+  BookDetail: { screen: BookDetail },
 },  {
   navigationOptions: {
     header: null
   }
-   })
+})
+const AppNavigator = StackNavigator(
+  {
+    Main: { screen: MainNavigator },
+    MenuDetail: { screen: MenuDetail },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+    navigationOptions: {
+      gesturesEnabled: false,
+    },
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 300,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+      },
+      screenInterpolator: sceneProps => {
+        const { layout, position, scene } = sceneProps
+        const { index } = scene
+
+        const height = layout.initHeight
+        const translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height, 0, 0],
+        })
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index - 0.99, index],
+          outputRange: [0, 1, 1],
+        })
+
+        return { opacity, transform: [{ translateY }] }
+      },
+    }),
+  }
+)
 
 function getCurrentScreen(navigationState) {
   if (!navigationState) {

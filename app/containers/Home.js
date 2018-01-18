@@ -38,7 +38,7 @@ class Home extends Component {
     const {data, isRefreshing} = this.props.home
     return ( 
       <View style={styles.container}>
-        <Header {...this.props}/> 
+        <Header noBack={true} {...this.props}/> 
         <ScrollView 
            refreshControl={
             <RefreshControl
