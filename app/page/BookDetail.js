@@ -28,7 +28,8 @@ class BookDetail extends Component {
         type: 'bookdetail/update',
         payload: {
           bookId,
-          bookInfo: {}
+          bookInfo: {},
+          commentVal: ''
         }
       })
     }
@@ -132,7 +133,11 @@ class BookDetail extends Component {
   }
   // 用户提交评论
   submitComment = ()=> {
-
+    const {bookId, commentVal} = this.props.bookdetail
+    this.fetchData('submitComment', {
+      bookId,
+      content: commentVal
+    })
   }
   render() {
     const {params} = this.props.navigation.state
@@ -171,15 +176,14 @@ class BookDetail extends Component {
                 <Text style={styles.txt} numberOfLines={1}><Text style={styles.gray}>出版社：</Text>{bookInfo.pressName}</Text>
                 <Text style={styles.txt} numberOfLines={1}><Text style={styles.gray}>出版：</Text>{fomatDate(bookInfo.createTime)}</Text>
                 {
-                  bookInfo.discountPrice?
-                    <Text style={styles.txt} numberOfLines={1}><Text style={styles.price}>¥{bookInfo.discountPrice}&nbsp;&nbsp;</Text><Text style={styles.gray}>原价：</Text><Text style={{textDecorationLine:'line-through'}}>¥{bookInfo.ebookPrice}</Text></Text>
-                  : <Text style={styles.txt} numberOfLines={1}><Text style={styles.gray}>售价：</Text>0</Text>            
+                  bookInfo.discountPrice?<Text style={styles.txt} numberOfLines={1}><Text style={styles.price}>¥{bookInfo.discountPrice}&nbsp;&nbsp;</Text><Text style={styles.gray}>原价：</Text><Text style={{textDecorationLine:'line-through'}}>¥{bookInfo.ebookPrice}</Text></Text>
+                  :<Text style={styles.txt} numberOfLines={1}><Text style={styles.gray}>售价：</Text>0</Text>            
                 }
               </View>
             </View>
             <View style={{flexDirection: 'row', marginTop: pxToDp(22)}}>
               <TextButton text='阅读' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.readBtn]}/>
-              {bookInfo.discountPrice&&<TextButton text='购买' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>}
+              {bookInfo.discountPrice&&<TextButton text='购买' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>||null}
             </View>
           </View>
             {/* 中间 tab 栏 */}
@@ -247,7 +251,7 @@ class BookDetail extends Component {
             <View style={styles.borderView}>
               <View style={styles.border}></View>
               <Text style={{fontSize: pxToDp(29), marginLeft: pxToDp(14)}}>热门书籍</Text>
-              <TextButton btnStyle={{flexDirection: 'row', alignItems: 'center'}} text='换一批&nbsp;' textStyle={{color: '#b1b1b1'}} Child={()=> <SimpleLineIcons style={{position: 'relative', top: pxToDp(4)}} color={'#b1b1b1'} name='refresh' size={pxToDp(26)}/>}/>
+              <TextButton onPress={()=> this.changeBookList()} btnStyle={{flexDirection: 'row', alignItems: 'center'}} text='换一批&nbsp;' textStyle={{color: '#b1b1b1'}} Child={()=> <SimpleLineIcons style={{position: 'relative', top: pxToDp(4)}} color={'#b1b1b1'} name='refresh' size={pxToDp(26)}/>}/>
             </View>
             <View>
               <View style={{ height: pxToDp(1), backgroundColor: '#c7c7c7', marginBottom: pxToDp(34)}}></View>
@@ -269,12 +273,11 @@ class BookDetail extends Component {
             </View>
           </View>     
         </ScrollView>
-        
         {
           tab == 2?
           <View style={styles.commentInput}>
-            <TextInput placeholder='说说你的想法' onChangeText={(value)=> this.update('commentVal', value)} style={styles.input} blurOnSubmit={true}/>
-            <TextButton onPress={()=> submitComment()} text='发表'/>
+            <TextInput placeholder='说说你的想法' value={commentVal}  onChangeText={(value)=> this.update('commentVal', value)} style={styles.input} blurOnSubmit={true}/>
+            <TextButton onPress={()=> this.submitComment()} text='发表'/>
           </View>  : null
         }   
         
@@ -397,7 +400,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
-    flex: 1
+    flex: 1,
+    height: pxToDp(44)
   }
 })
 const mapStateToProps = ({app, router, bookdetail})=> {

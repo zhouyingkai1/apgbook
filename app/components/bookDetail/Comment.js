@@ -9,10 +9,18 @@ import {dateFormat} from '../../utils'
 import theme from '../../utils/theme'
 import TextButton from '../common/TextButton'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
-
 const Comment = (props)=> {
-  const {item, update, commentList} = props
+  const {item, update, deleModal} = props
   const {avatar, name, uid} = item.creator
+  //删除评论
+  const deleteComment = (id)=> {
+    props.dispatch({
+      type: 'bookdetail/deleteComment',
+      payload: {
+        comment_id: id
+      }
+    })
+  }
   return (
     <View style={{marginBottom: pxToDp(60)}}> 
       <TouchableOpacity activeOpacity={0.6} style={styles.box}>
@@ -21,7 +29,7 @@ const Comment = (props)=> {
           <Text>{name}</Text>
           <Text style={styles.comment}>{item.content}</Text>
           {
-            item.replys.length>0?
+            !!item.replys&&item.replys.length>0?
               <TouchableOpacity onPress={()=> {
                 requestAnimationFrame(()=> {
                   
@@ -41,7 +49,7 @@ const Comment = (props)=> {
                   })
                 }   
                 {item.replys.length>3?<Text style={{marginTop: pxToDp(10),color: '#3478f7'}}>更多{item.replys.length - 3}条回复</Text>: null}
-              </TouchableOpacity> : null
+              </TouchableOpacity>:null
           }
           <View style={styles.info}>
             <Text style={styles.time}>{dateFormat(item.createTime, 'yyyy-MM-dd hh:mm:ss')}</Text>
@@ -50,7 +58,7 @@ const Comment = (props)=> {
               <Text style={styles.num}>{item.likeNum}</Text>
               <TextButton  Child={()=> <MaterialCommunityIcons size={pxToDp(32)} color='#999' name='comment-text-outline'/>}/>
               <Text style={styles.num}>{item.replyTotal}</Text>
-              {item.canDelete?<TextButton  Child={()=> <MaterialCommunityIcons size={pxToDp(36)} color='#999' name='delete-forever'/>}/>: null}
+              {item.canDelete?<TextButton onPress={()=> deleteComment(item.id)}  Child={()=> <MaterialCommunityIcons size={pxToDp(36)} color='#999' name='delete-forever'/>}/>:null}
             </View>
           </View>
         </View>

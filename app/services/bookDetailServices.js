@@ -35,6 +35,20 @@ export function cancelCollectBook(data) {
     body: data,
   })
 }
+//发表评论
+export function submitComment(data) {
+  return request('/book/bookComment', {
+    method: 'POST',
+    body: data,
+  })
+}
+//删除评论
+export function deleteComment(data) {
+  return request('/book/deleteBookComment', {
+    method: 'POST',
+    body: data,
+  })
+}
 //获取菜单列表
 export function getMenu(data) {
   return request('/book/getMenu', {

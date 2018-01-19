@@ -59,7 +59,7 @@ export default {
       }
     },
     *bookCatalog({payload}, { call, put }) {
-      const param = {book_uid: payload.bookId, pageNumber: payload.currentPage, pageSize: payload.pageSize || 10}
+      const param = {book_uid: payload.bookId, pageNumber: payload.currentPage || 1, pageSize: payload.pageSize || 10}
       const result = yield call(bookDetailServices.bookCatalog, param)
       if(result) {
         yield put({
@@ -90,6 +90,53 @@ export default {
         Storage.set(`bookInfo(${bookInfo.bookId})`, bookInfo)
       }
     },
-
+    *submitComment({payload}, {call, put, select}) {
+      const param = {book_uid: payload.bookId, content: payload.content, replyId: payload.replyId || 0, h5: 1}
+      const result = yield call(bookDetailServices.submitComment, param)
+      if(result.code == '000') {
+        //commentNum
+       
+        Toast.show('评论成功', {position: pxToDp(650)})
+        yield put({
+          type: 'bookCatalog',
+          payload: { 
+            pageSize: 2,
+            bookId: payload.bookId
+          }
+        })
+        const bookInfo = yield select(state=> state.bookdetail.bookInfo)
+        bookInfo.commentNum = bookInfo.commentNum + 1
+        yield put({
+          type: 'update',
+          payload: {
+            commentVal: '',
+            bookInfo
+          }
+        })
+      }
+    },
+    *deleteComment({payload}, {call, put, select}) {
+      const result = yield call(bookDetailServices.deleteComment, payload)
+      if(result.code == '000') {
+        //commentNum
+        Toast.show('删除成功', {position: pxToDp(650)})
+        const bookId = yield select(state=> state.bookdetail.bookInfo.bookId)
+        yield put({
+          type: 'bookCatalog',
+          payload: { 
+            pageSize: 2,
+            bookId
+          }
+        })
+        const bookInfo = yield select(state=> state.bookdetail.bookInfo)
+        bookInfo.commentNum = bookInfo.commentNum - 1
+        yield put({
+          type: 'update',
+          payload: {
+            bookInfo
+          }
+        })
+      }
+    }
   },
 }

@@ -48,7 +48,6 @@ class CommentDetail extends Component{
   }
   renderFooter = () => {
     const {current, total} = this.props.commentdetail 
-    console.log(current, total)
     return (
       <View style={{ marginTop: pxToDp(20), marginBottom: pxToDp(30), justifyContent: 'center', paddingLeft: pxToDp(40), paddingRight: pxToDp(40)}}>
         {
