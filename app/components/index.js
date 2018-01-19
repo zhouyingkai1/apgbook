@@ -14,6 +14,8 @@ import TagItem from './category/TagItem'
 import BookItem from './bookshelf/BookItem'
 // 书本 目录 公用
 import BookMenu from './bookDetail/BookMenu'
+//书本 评论列表
+import Comment from './bookDetail/Comment'
 module.exports={
   TextButton,
   Touchable,
@@ -25,5 +27,6 @@ module.exports={
   Loading,
   Alert,
   TabView,
-  BookMenu
+  BookMenu,
+  Comment
 }

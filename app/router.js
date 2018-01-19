@@ -20,6 +20,7 @@ import Detail from './page/Detail'
 import Bookshelf from './page/Bookshelf'
 import BookDetail from './page/BookDetail'
 import MenuDetail from './page/MenuDetail'
+import CommentDetail from './page/CommentDetail'
 
 const HomeNavigator = TabNavigator(
   {
@@ -103,6 +104,7 @@ const AppNavigator = StackNavigator(
   {
     Main: { screen: MainNavigator },
     MenuDetail: { screen: MenuDetail },
+    CommentDetail: { screen: CommentDetail },
   },
   {
     headerMode: 'none',

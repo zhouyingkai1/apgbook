@@ -4,7 +4,7 @@ import pxToDp from '../../utils/pxToDp'
 
 const TextButton = ({ text, textStyle, btnStyle, Child, onPress }) => (
   <TouchableOpacity onPress={onPress} style={btnStyle}>
-    <Text style={[styles.text, textStyle]}>{text}</Text>
+    {text&&<Text style={[styles.text, textStyle]}>{text}</Text>}
     {Child&&<Child />}
   </TouchableOpacity>
 )

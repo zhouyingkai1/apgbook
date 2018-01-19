@@ -6,14 +6,15 @@ export default {
   namespace: 'bookdetail',
   state: {
     bookInfo: {},
-    catalog: [],  //评论列表
+    comment: [],  //评论列表
     visible: false,
     bookId: '',
     tab: 0,
     hotBook: [],
     hotBookIndex: 0,
     isRefreshing: false,
-    menu: []
+    menu: [],
+    commentVal: '', //评论内容
   },
   reducers: {
     update(state, { payload }) {
@@ -57,6 +58,18 @@ export default {
         })
       }
     },
+    *bookCatalog({payload}, { call, put }) {
+      const param = {book_uid: payload.bookId, pageNumber: payload.currentPage, pageSize: payload.pageSize || 10}
+      const result = yield call(bookDetailServices.bookCatalog, param)
+      if(result) {
+        yield put({
+          type: 'update',
+          payload: { 
+            comment: result.datas
+          }
+        })
+      }
+    },
     *hanldeCollect({payload}, { call, put }) {
       let {bookInfo} = payload
       let result
@@ -77,5 +90,6 @@ export default {
         Storage.set(`bookInfo(${bookInfo.bookId})`, bookInfo)
       }
     },
+
   },
 }

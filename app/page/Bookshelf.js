@@ -92,7 +92,6 @@ class Bookshelf extends Component {
     }
     this.update('isRefreshing', true) 
     let currentPage = current + 1
-    this.update('current', currentPage) 
     if(!categoryId){
       this.fetchData(currentPage)
     }else{

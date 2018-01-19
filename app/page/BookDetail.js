@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView, Animated, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, ScrollView, Animated, RefreshControl, TextInput } from 'react-native'
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
-import {Header, Alert, TabView, BookMenu} from '../components'
+import {Header, Alert, TabView, BookMenu, TextButton, Comment} from '../components'
 import Toast from 'react-native-root-toast'
 import theme from '../utils/theme'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { Storage, fomatDate, NavigationActions } from '../utils'
-import { hotBook } from '../services/bookDetailServices';
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 // import HTML from 'react-native-render-html'
 class BookDetail extends Component {
   constructor(props) {
@@ -53,6 +53,8 @@ class BookDetail extends Component {
     }
     //请求 目录
     this.fetchData('getBookMenu', {book_uid: bookId})
+    //请求两条评论
+    this.fetchData('bookCatalog', {bookId, currentPage: 1, pageSize: 2})
   }
   update = (name, val)=> {
     this.props.dispatch({
@@ -118,6 +120,8 @@ class BookDetail extends Component {
       }else{
         this.update('bookInfo', bookInfo)
       }
+      //请求新的评论
+      this.fetchData('bookCatalog', {bookId: newBook.bookId, currentPage: 1, pageSize: 2})
     }
     this.fetchData('getBookMenu', {book_uid: newBook.bookId})
     this.refs.scrollView.scrollTo({x: 0, y: 0, animated: true})
@@ -126,15 +130,20 @@ class BookDetail extends Component {
     this.update('isRefreshing', true)
     this.fetchData('getBookInfo', {bookId: this.props.bookdetail.bookId})
   }
+  // 用户提交评论
+  submitComment = ()=> {
+
+  }
   render() {
     const {params} = this.props.navigation.state
-    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu} = this.props.bookdetail
+    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu, commentVal, comment} = this.props.bookdetail
     const hotBookList = hotBook.slice(hotBookIndex * 3, (hotBookIndex+1)*3)
     let menuList = menu.slice(0,6)
     return (
       <View style={{flex: 1}}>
         <Header  right={this.headRight} title={params.title} {...this.props}/>
         <ScrollView 
+          keyboardDismissMode='on-drag'
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
@@ -169,15 +178,8 @@ class BookDetail extends Component {
               </View>
             </View>
             <View style={{flexDirection: 'row', marginTop: pxToDp(22)}}>
-              <TouchableOpacity style={[styles.btn, styles.readBtn]}>
-                <Text>阅读</Text>
-              </TouchableOpacity> 
-              {
-                bookInfo.discountPrice?
-                <TouchableOpacity style={[styles.btn, styles.buyBtn]}>
-                  <Text>购买</Text>
-                </TouchableOpacity> : null
-              } 
+              <TextButton text='阅读' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.readBtn]}/>
+              {bookInfo.discountPrice&&<TextButton text='购买' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>}
             </View>
           </View>
             {/* 中间 tab 栏 */}
@@ -201,22 +203,28 @@ class BookDetail extends Component {
               <View style={[styles.tabCommon]}><Text style={{lineHeight: pxToDp(45), fontSize: pxToDp(30)}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{bookInfo.description}</Text></View>}
             {tab == 1? 
               <View style={styles.menuBox}>
-                {
-                  menuList.map((item, index)=> (
+                {menuList.map((item, index)=> (
                     <BookMenu key={index} item={item} index={index} {...this.props}/>
                   ))
                 }
-                {
-                  menu.length>6&&<TouchableOpacity
-                      onPress={()=> this.props.navigation.navigate('MenuDetail',{menu})}
-                      activeOpacity={0.6} style={{ marginTop: pxToDp(20), marginBottom: pxToDp(10), alignItems: 'center'}}>
-                    <Text style={{color: '#999'}}>更多目录>></Text>
-                  </TouchableOpacity>
-                }
+                {menu.length>6?
+                  <TextButton 
+                    text='更多目录>>' 
+                    onPress={()=> requestAnimationFrame(()=> this.props.navigation.navigate('MenuDetail',{menu}))} 
+                    btnStyle={{ marginTop: pxToDp(20), marginBottom: pxToDp(10), alignItems: 'center'}}
+                    textStyle={{color: '#999'}} activeOpacity={0.6}/>:null}
               </View>: null}
             {tab == 2? 
-              <View>
-                <Text>评论</Text>
+              <View style={[styles.tabCommon, ]}>
+                {
+                  comment.length<1?<Text style={{color: '#999', textAlign: 'center', marginBottom: pxToDp(5)}}>暂无评论，快来抢沙发吧</Text>:
+                  comment.map((item, index)=> {
+                    return <Comment update={(name, val)=> this.update(name, val)} {...this.props} item={item} key={index} />
+                  })
+                }
+                {bookInfo.commentNum>2?<TextButton 
+                  onPress={()=> requestAnimationFrame(()=> this.props.navigation.navigate('CommentDetail',{bookId: bookInfo.bookId, title: bookInfo.bookName}))} 
+                  textStyle={{color: '#999'}} btnStyle={{alignItems: 'center'}} text='更多评论>>'/>: null}
               </View>
               : null}
           </View> 
@@ -225,9 +233,7 @@ class BookDetail extends Component {
             <View style={[styles.borderView]}>
               <View style={styles.border}></View>
               <Text style={{fontSize: pxToDp(29), marginLeft: pxToDp(14)}}>{bookInfo.pressName}</Text>
-              <TouchableOpacity>
-                <Text style={{color: '#b1b1b1'}}>进入书店<SimpleLineIcons color={'#b1b1b1'} name='arrow-right' size={pxToDp(26)}/></Text>
-              </TouchableOpacity>
+              <TextButton btnStyle={{flexDirection: 'row', alignItems: 'center'}} text='进入书店' textStyle={{color: '#b1b1b1'}} Child={()=> <SimpleLineIcons color={'#b1b1b1'} name='arrow-right' size={pxToDp(26)}/>}/>
             </View>
             <View>
               <View style={{ borderTopWidth: pxToDp(1), borderColor: '#c7c7c7', marginBottom: pxToDp(34)}}></View>
@@ -241,9 +247,7 @@ class BookDetail extends Component {
             <View style={styles.borderView}>
               <View style={styles.border}></View>
               <Text style={{fontSize: pxToDp(29), marginLeft: pxToDp(14)}}>热门书籍</Text>
-              <TouchableOpacity onPress={()=> this.changeBookList()}>
-                <Text style={{color: '#b1b1b1'}}>换一批&nbsp;<SimpleLineIcons style={{position: 'relative', top: pxToDp(4)}} color={'#b1b1b1'} name='refresh' size={pxToDp(26)}/></Text>
-              </TouchableOpacity>
+              <TextButton btnStyle={{flexDirection: 'row', alignItems: 'center'}} text='换一批&nbsp;' textStyle={{color: '#b1b1b1'}} Child={()=> <SimpleLineIcons style={{position: 'relative', top: pxToDp(4)}} color={'#b1b1b1'} name='refresh' size={pxToDp(26)}/>}/>
             </View>
             <View>
               <View style={{ height: pxToDp(1), backgroundColor: '#c7c7c7', marginBottom: pxToDp(34)}}></View>
@@ -261,12 +265,19 @@ class BookDetail extends Component {
                     </TouchableOpacity>
                   ))
                 }
-                
               </View>
             </View>
-            
           </View>     
         </ScrollView>
+        
+        {
+          tab == 2?
+          <View style={styles.commentInput}>
+            <TextInput placeholder='说说你的想法' onChangeText={(value)=> this.update('commentVal', value)} style={styles.input} blurOnSubmit={true}/>
+            <TextButton onPress={()=> submitComment()} text='发表'/>
+          </View>  : null
+        }   
+        
         <Alert
           onBackdropPress={()=> this.update('visible', false)} 
           txt='为了您的使用体验，请允许我使用手机相册请允许我使用手机相册' 
@@ -274,6 +285,7 @@ class BookDetail extends Component {
           onOkPress={()=> Toast.show('确定')}
           okTxt='可以打开'
         />
+        <KeyboardSpacer/>
       </View>
     )
   }
@@ -371,6 +383,21 @@ const styles = StyleSheet.create({
     paddingRight: pxToDp(70),
     paddingTop: pxToDp(30),
     paddingBottom: pxToDp(30),
+  },
+  commentInput: {
+    height: pxToDp(92),
+    paddingBottom: pxToDp(20),
+    paddingRight: pxToDp(20),
+    paddingTop: pxToDp(20),
+    paddingLeft: pxToDp(20),
+    backgroundColor: '#fff',
+    borderTopWidth: pxToDp(1),
+    borderColor: '#c7c7c7',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  input: {
+    flex: 1
   }
 })
 const mapStateToProps = ({app, router, bookdetail})=> {

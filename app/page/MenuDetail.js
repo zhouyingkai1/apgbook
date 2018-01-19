@@ -3,15 +3,8 @@ import {View, FlatList, Text, TouchableOpacity} from 'react-native'
 import {BookMenu, Header} from '../components'
 import {connect} from 'react-redux'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import { NavigationActions } from '../utils'
 import pxToDp from '../utils/pxToDp'
 class MenuDetail extends Component{
-  resetAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-      NavigationActions.navigate({ routeName: 'Main'})
-    ]
-  })
   headerRight = ()=> ( 
     <TouchableOpacity></TouchableOpacity>
   )

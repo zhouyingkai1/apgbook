@@ -32,7 +32,7 @@ export default {
           payload: { 
             data: [...oldData, ...result.data.datas],
             total: result.data.totalPage,
-            current: payload.current || 1,
+            current: result.pageNumber || 1,
             isRefreshing: false,
             isLoading: false
           }
