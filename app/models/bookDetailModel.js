@@ -15,6 +15,7 @@ export default {
     isRefreshing: false,
     menu: [],
     commentVal: '', //评论内容
+    replyInfo: {} , //回复谁
   },
   reducers: {
     update(state, { payload }) {
@@ -58,6 +59,29 @@ export default {
         })
       }
     },
+    *handleBookLike({payload}, { call, put, select }) {
+      const result = yield call(bookDetailServices.bookLike, payload)
+      if(result.code == '000') {
+        const comment = yield select(state=> state.bookdetail.comment)
+        const newComment = comment.filter(item=> {
+          if(item.id == payload.comment_id){
+            item.islike = Number(!payload.type)
+            if(payload.type) {
+              ++item.likeNum
+            }else{
+              --item.likeNum
+            }
+          }
+          return item
+        })
+        yield put({
+          type: 'update',
+          payload: { 
+            comment: newComment
+          }
+        })
+      }
+    },
     *bookCatalog({payload}, { call, put }) {
       const param = {book_uid: payload.bookId, pageNumber: payload.currentPage || 1, pageSize: payload.pageSize || 10}
       const result = yield call(bookDetailServices.bookCatalog, param)
@@ -91,11 +115,15 @@ export default {
       }
     },
     *submitComment({payload}, {call, put, select}) {
+      const {replyInfo} = payload
       const param = {book_uid: payload.bookId, content: payload.content, replyId: payload.replyId || 0, h5: 1}
+      if(replyInfo.parentId) {
+        param.replyId = replyInfo.parentId
+        param.first_parent_id = replyInfo.parentId
+      }
       const result = yield call(bookDetailServices.submitComment, param)
       if(result.code == '000') {
         //commentNum
-       
         Toast.show('评论成功', {position: pxToDp(650)})
         yield put({
           type: 'bookCatalog',

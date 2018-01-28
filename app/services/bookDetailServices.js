@@ -56,3 +56,10 @@ export function getMenu(data) {
     body: data,
   })
 }
+//点赞 取消点赞
+export function bookLike(data) {
+  return request('/book/bookLike', {
+    method: 'POST',
+    body: data,
+  })
+}

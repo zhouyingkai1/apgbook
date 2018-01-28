@@ -133,15 +133,38 @@ class BookDetail extends Component {
   }
   // 用户提交评论
   submitComment = ()=> {
-    const {bookId, commentVal} = this.props.bookdetail
+    const {bookId, commentVal, replyInfo} = this.props.bookdetail
     this.fetchData('submitComment', {
       bookId,
-      content: commentVal
+      content: commentVal,
+      replyInfo
+    })
+    this.refs.input.blur()
+  }
+  //点赞 取消点赞
+  handlePraise = (type, commentId)=> {
+    // type == 1 未点赞
+    this.fetchData('handleBookLike', {comment_id: commentId, type})
+  }
+  //删除评论
+  deleteComment = (id)=> {
+    this.props.dispatch({
+      type: 'bookdetail/deleteComment',
+      payload: {
+        comment_id: id
+      }
     })
   }
+  // 回复评论
+  replyComment = (info)=> {
+    this.update('replyInfo', info)
+    this.refs.input.focus()
+  }
+  // 保存评论内容
+  updateCommentVal = value=> this.update('commentVal', value)
   render() {
     const {params} = this.props.navigation.state
-    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu, commentVal, comment} = this.props.bookdetail
+    const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu, commentVal, comment, replyInfo} = this.props.bookdetail
     const hotBookList = hotBook.slice(hotBookIndex * 3, (hotBookIndex+1)*3)
     let menuList = menu.slice(0,6)
     return (
@@ -197,7 +220,7 @@ class BookDetail extends Component {
                   duration: 400,
               }).start();
               }} 
-              tabs={['简介', `目录(${menu.length})`, `评论(${bookInfo.commentNum})`]}
+              tabs={['简介', `目录(${menu.length})`, `评论(${bookInfo.commentNum||0})`]}
               activeTextColor='#f6c243'
               textStyle={{}}
               underlineStyle={{backgroundColor: '#f6c243'}}
@@ -223,7 +246,18 @@ class BookDetail extends Component {
                 {
                   comment.length<1?<Text style={{color: '#999', textAlign: 'center', marginBottom: pxToDp(5)}}>暂无评论，快来抢沙发吧</Text>:
                   comment.map((item, index)=> {
-                    return <Comment update={(name, val)=> this.update(name, val)} {...this.props} item={item} key={index} />
+                    return( 
+                      <Comment 
+                        replyComment={this.replyComment} 
+                        replyInfo={replyInfo}
+                        bookInfo={bookInfo} 
+                        deleteComment={this.deleteComment} 
+                        handlePraise={this.handlePraise} 
+                        update={(name, val)=> this.update(name, val)}
+                        {...this.props} 
+                        item={item} 
+                        key={index} />
+                    )
                   })
                 }
                 {bookInfo.commentNum>2?<TextButton 
@@ -276,7 +310,7 @@ class BookDetail extends Component {
         {
           tab == 2?
           <View style={styles.commentInput}>
-            <TextInput placeholder='说说你的想法' value={commentVal}  onChangeText={(value)=> this.update('commentVal', value)} style={styles.input} blurOnSubmit={true}/>
+            <TextInput onBlur={()=> this.update('replyInfo', {})} ref='input' placeholder={replyInfo.name?`回复${replyInfo.name}:`:'说说你的想法'} value={commentVal}  onChangeText={(value)=> this.updateCommentVal(value)} style={styles.input} blurOnSubmit={true}/>
             <TextButton onPress={()=> this.submitComment()} text='发表'/>
           </View>  : null
         }   
