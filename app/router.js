@@ -21,6 +21,7 @@ import Bookshelf from './page/Bookshelf'
 import BookDetail from './page/BookDetail'
 import MenuDetail from './page/MenuDetail'
 import CommentDetail from './page/CommentDetail'
+import ReadPage from './page/ReadPage'
 
 const HomeNavigator = TabNavigator(
   {
@@ -95,6 +96,7 @@ const MainNavigator = StackNavigator({
   Login: { screen: Login },
   Bookshelf: { screen: Bookshelf },
   BookDetail: { screen: BookDetail },
+  ReadPage: { screen: ReadPage },
 },  {
   navigationOptions: {
     header: null

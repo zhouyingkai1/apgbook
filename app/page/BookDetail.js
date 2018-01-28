@@ -205,7 +205,7 @@ class BookDetail extends Component {
               </View>
             </View>
             <View style={{flexDirection: 'row', marginTop: pxToDp(22)}}>
-              <TextButton text='阅读' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.readBtn]}/>
+              <TextButton onPress={()=> requestAnimationFrame(()=> this.props.navigation.navigate('ReadPage', {bookId: bookInfo.bookId}))} text='阅读' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.readBtn]}/>
               {bookInfo.discountPrice&&<TextButton text='购买' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>||null}
             </View>
           </View>
