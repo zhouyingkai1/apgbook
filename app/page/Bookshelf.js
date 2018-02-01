@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity, InteractionManager } from 'react-native'
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
-import {Header, BookItem, Loading, TextButton} from '../components'
+import {Header, BookItem, Loading, TextButton, ListFooter, LoadingWithBg} from '../components'
 import Toast from 'react-native-root-toast'
 import theme from '../utils/theme'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -99,23 +99,10 @@ class Bookshelf extends Component {
     }
   }
   _keyExtractor = (item, index) => index
-  renderFooter = () => {
-    const {current, total} = this.props.bookshelf 
-    return (
-      <View style={{ marginTop: pxToDp(20), marginBottom: pxToDp(30), justifyContent: 'center', paddingLeft: pxToDp(40), paddingRight: pxToDp(40)}}>
-        {
-          current >= total ? 
-          <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-            <View style={styles.noMoreLine}></View>
-            <Text style={styles.full}>没有更多了～</Text>
-          </View>
-          : <Loading />
-        }
-      </View>
-    )
-  }
   changeSort = (orderType)=> {
+    this.update('isLoadingTypeChange', true)
     requestAnimationFrame(()=> {
+      this.refs.flatList.scrollToOffset({x: 0, y: 0, animated: true})
       const {orderType: type} = this.props.bookshelf
       if(orderType == type && orderType!= 4){
         return
@@ -132,10 +119,11 @@ class Bookshelf extends Component {
   }
   render() {
     const {params} = this.props.navigation.state
-    const {data, isRefreshing, current, total, isLoading, orderType} = this.props.bookshelf
+    const {data, isRefreshing, current, total, isLoading, orderType, isLoadingTypeChange} = this.props.bookshelf
     return (
       <View style={{flex: 1}} >
         <Header title={params.title} {...this.props}/>
+        <LoadingWithBg isShow={isLoadingTypeChange}/>
         <View style={styles.sort}>
           <TextButton onPress={()=> this.changeSort(1)} text='最热' btnStyle={{marginRight: pxToDp(60)}} textStyle={{color: orderType == 1? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
           <TextButton onPress={()=> this.changeSort(2)} text='最新' btnStyle={{marginRight: pxToDp(60)}} textStyle={{color: orderType == 2? '#000': '#b1b1b1', fontSize: pxToDp(30) }}/>
@@ -146,6 +134,7 @@ class Bookshelf extends Component {
           isLoading?
             <Loading /> :
             <FlatList
+              ref='flatList'
               data={data}
               renderItem={this.renderItem}
               keyExtractor={this._keyExtractor}
@@ -153,7 +142,7 @@ class Bookshelf extends Component {
               showsHorizontalScrollIndicator= {false}
               onEndReachedThreshold={0.3}
               onEndReached={this.fetchMore} 
-              ListFooterComponent={this.renderFooter}
+              ListFooterComponent={()=> <ListFooter page={current} total={total}/>}
               style={{flex: 1}}
             />
         }
@@ -166,20 +155,6 @@ const styles = StyleSheet.create({
   icon: {
     width: pxToDp(36),
     height: pxToDp(36),
-  },
-  full: {
-    textAlign: 'center',   
-    color: '#666',
-    position: 'absolute',
-    top: 0,
-    paddingLeft: pxToDp(20),
-    paddingRight: pxToDp(20),
-  },
-  noMoreLine: {
-    height: 1,
-    marginTop: pxToDp(16),
-    width: (theme.screenWidth - 30),
-    backgroundColor: '#c7c7c7'
   },
   sort: {
     flexDirection: 'row',

@@ -218,7 +218,7 @@ class BookDetail extends Component {
                 Animated.timing(this.state.translateValue, {
                   toValue: page * 0.333,
                   duration: 400,
-              }).start();
+                }).start();
               }} 
               tabs={['简介', `目录(${menu.length})`, `评论(${bookInfo.commentNum||0})`]}
               activeTextColor='#f6c243'
@@ -231,7 +231,7 @@ class BookDetail extends Component {
             {tab == 1? 
               <View style={styles.menuBox}>
                 {menuList.map((item, index)=> (
-                    <BookMenu key={index} item={item} index={index} {...this.props}/>
+                    <BookMenu bookId={bookInfo.bookId} key={index} item={item} index={index} {...this.props}/>
                   ))
                 }
                 {menu.length>6?

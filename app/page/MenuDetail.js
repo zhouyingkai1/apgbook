@@ -9,7 +9,7 @@ class MenuDetail extends Component{
     <TouchableOpacity></TouchableOpacity>
   )
   renderItem = ({item})=> {
-    return <BookMenu item={item} {...this.props}/>
+    return <BookMenu  item={item} {...this.props}/>
   }
   render() {
     const {menu} = this.props.navigation.state.params

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, RefreshControl } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, RefreshControl, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
 import { Header, HomeItem } from '../components'
@@ -17,6 +17,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      show: true
     };
   }
   openDrawer = ()=> {
@@ -38,7 +39,7 @@ class Home extends Component {
     const {data, isRefreshing} = this.props.home
     return ( 
       <View style={styles.container}>
-        <Header noBack={true} {...this.props}/> 
+        <Header noBack={true} {...this.props}/>
         <ScrollView 
            refreshControl={
             <RefreshControl

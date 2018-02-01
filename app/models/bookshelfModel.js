@@ -10,7 +10,8 @@ export default {
     isLoading: true,
     categoryId: '',
     orderType: 1,
-    orderBy: 0
+    orderBy: 0,
+    isLoadingTypeChange: false
   },
   reducers: {
     update(state, { payload }) {
@@ -34,7 +35,8 @@ export default {
             total: result.data.totalPage,
             current: result.pageNumber || 1,
             isRefreshing: false,
-            isLoading: false
+            isLoading: false,
+            isLoadingTypeChange: false
           }
         })
       }
@@ -56,7 +58,8 @@ export default {
           total: result.totalPage,
           current: payload.current || 1,
           isRefreshing: false,
-          isLoading: false
+          isLoading: false,
+          isLoadingTypeChange: false
         }
       })
     }

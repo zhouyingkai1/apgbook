@@ -22,6 +22,7 @@ import BookDetail from './page/BookDetail'
 import MenuDetail from './page/MenuDetail'
 import CommentDetail from './page/CommentDetail'
 import ReadPage from './page/ReadPage'
+import SearchPage from './page/SearchPage'
 
 const HomeNavigator = TabNavigator(
   {
@@ -97,6 +98,7 @@ const MainNavigator = StackNavigator({
   Bookshelf: { screen: Bookshelf },
   BookDetail: { screen: BookDetail },
   ReadPage: { screen: ReadPage },
+  SearchPage: { screen: SearchPage },
 },  {
   navigationOptions: {
     header: null

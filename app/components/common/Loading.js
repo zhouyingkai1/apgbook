@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 
-const Loading = () => (
+const Loading = (props) => (
   <View style={styles.container}>
-    <ActivityIndicator size='large' animating={true}/>
+    <ActivityIndicator color={props.color} size='large' animating={true}/>
   </View>
 )
 
