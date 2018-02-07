@@ -14,18 +14,22 @@ import LinearGradient from 'react-native-linear-gradient';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Toast from 'react-native-root-toast'
+import Alert from './Alert'
 /**
  * 自定义导航
  **/
 const Header = (props)=> {
   const {title, backTitle, right, left, noBack, isClose} = props
-  const handlelogin = ()=> {
-    props.dispatch({
-      type: 'app/updateState',
-      payload: {
-        login: true
-      }
-    })
+  // const handlelogin = ()=> {
+  //   props.dispatch({
+  //     type: 'app/updateState',
+  //     payload: {
+  //       loginAlert: true
+  //     }
+  //   })
+  // }
+  const openDrawer = ()=> {
+    props.navigation.navigate('DrawerOpen')
   }
   return (
     <LinearGradient
@@ -47,13 +51,13 @@ const Header = (props)=> {
             <View>
               {
                 props.app.login?
-                  <TouchableOpacity style={[styles.left]} onPress={()=> props.navigation.navigate('DrawerOpen')}>
+                  <TouchableOpacity style={[styles.left]} onPress={()=> openDrawer()}>
                     <Image 
                     source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
                     style={styles.avatar}/>
                   </TouchableOpacity>
                   :
-                  <TouchableOpacity style={[styles.left]} onPress={()=> handlelogin()}>
+                  <TouchableOpacity style={[styles.left]} onPress={()=> openDrawer()}>
                     <FontIcon style={styles.noneBg} name="user-circle" size={pxToDp(46)} color={'#aaa'} />
                   </TouchableOpacity>
               }
@@ -74,6 +78,11 @@ const Header = (props)=> {
           <EvilIcons onPress={()=> props.navigation.navigate('SearchPage')} style={[{transform: [{rotate: '90deg'}]},styles.noneBg]} name="search" size={pxToDp(60)} color={'#aaa'} />
         }
       </View>
+      <Alert 
+        txt='还未登录，是否前往登录？'
+        okTxt='前往'
+        visible={props.app.loginAlert}
+      />
     </LinearGradient>
   )
 };

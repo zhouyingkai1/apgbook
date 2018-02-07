@@ -3,10 +3,10 @@ import {View, StyleSheet, Text} from 'react-native'
 import pxToDp from '../../utils/pxToDp'
 import Loading from './Loading'
 const LoadingWithBg = ({isShow}) => (
-      isShow?
-      <View style={styles.loading}>
-        <Loading color={'#fff'} />
-      </View>: null
+  isShow?
+    <View style={styles.loading}>
+      <Loading color={'#fff'} />
+    </View>: null
 )
 const styles = StyleSheet.create({
   loading: {

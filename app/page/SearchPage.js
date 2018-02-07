@@ -1,28 +1,16 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, PanResponder} from 'react-native'
 import { connect } from 'react-redux'
-import {Header, ListFooter, BookItem} from '../components'
+import {Header, ListFooter, BookItem, LoadingWithBg} from '../components'
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import pxToDp from '../utils/pxToDp'
 import Toast from 'react-native-root-toast'
 class SearchPage extends Component {
-  componentDidMount = ()=> {
-
-  }
   searchData = (params={})=> {
     const {keyword, page, pageSize} =this.props.search
     if(!!!keyword){
       return Toast.show('请输入搜索内容')
     }
-    this.props.dispatch({
-      type: 'search/update',
-      payload: {
-        data: [],
-        total: 2,
-        page: 1,
-        isSearch: false
-      }
-    }) 
     const form = {
       pageNumber: params.page || page,
       pageSize: params.pageSize || pageSize || 10,
@@ -48,8 +36,17 @@ class SearchPage extends Component {
       </View>
     )
   }
+  fetchMore = ()=> { 
+    const {page, total, isRefreshing, canFetchMore} = this.props.search
+    if(isRefreshing || page >= total) {
+      return
+    }
+    this.update('isRefreshing', true) 
+    let currentPage = page + 1
+    this.searchData({page: currentPage})
+  }
   render() {
-    const {data, total, page, isSearch} = this.props.search
+    const {data, total, page, isSearch, isRefreshing } = this.props.search
     return (
       <View style={{flex: 1}}>
         <Header right={()=> null} {...this.props} title='搜索'/>
@@ -61,17 +58,25 @@ class SearchPage extends Component {
               returnKeyType={'search'}
               style={styles.input}
               onChangeText={value=> this.update('keyword', value)}
-              onSubmitEditing={this.searchData}
+              onSubmitEditing={()=> this.searchData({page: 1})}
             />
           </View>
         </View>
-        {isSearch?
-          <FlatList 
-            data = {data}
-            renderItem={({item})=> <BookItem item={item} {...this.props}/>}
-            keyExtractor={(item, index)=> index}
-            ListFooterComponent={()=> <ListFooter page={page} total={total}/>}
-          /> : null
+        <View style={{flex: 1}}>
+          {isSearch?
+            <FlatList 
+              data = {data}
+              renderItem={({item})=> <BookItem item={item} {...this.props}/>}
+              keyExtractor={(item, index)=> index}
+              ListFooterComponent={()=> <ListFooter page={page} total={total}/>}
+              style={{flex: 1}}
+              onEndReachedThreshold={0.1}
+              onEndReached={this.fetchMore} 
+            /> : null
+          }
+        </View>
+        {
+          isSearch?<LoadingWithBg isShow={isRefreshing}/>:null
         }
       </View>
     )

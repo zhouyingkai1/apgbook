@@ -77,38 +77,6 @@ const Comment = (props)=> {
           </View>
         </View>
       </View>
-      {/* <Modal isOpen={commentModal} 
-        onClosed={onBackdropPress}
-        position='bottom'
-        coverScreen={true}
-        swipeToClose={false}
-        style={{justifyContent: 'flex-end', height: '85%', backgroundColor: 'rgba(0,0,0,0.2)'}}
-
-      >
-        <View style={styles.model}>
-          <FlatList 
-            data={item.replys}
-            keyExtractor={(item, index)=> index}
-            initialNumToRender={30}
-            style={styles.list}
-            removeClippedSubviews={false}
-            renderItem={({item})=> {
-              return (
-                <Text style={{ fontSize: pxToDp(28), lineHeight: pxToDp(40)}}>
-                  <Text style={{color: '#3478f7'}}>{item.creator.name}：</Text>
-                  {item.content}
-                  <TextButton btnStyle={{width: pxToDp(60), height: pxToDp(60)}} textStyle={{color: '#3478f7'}} text='删除'/>
-                </Text>
-              )
-            }}  
-          />
-          <View>
-            <TextInput />
-            <Text>发表</Text>
-          </View>
-          <KeyboardSpacer />
-        </View>
-      </Modal> */}
     </View>
   )
 }

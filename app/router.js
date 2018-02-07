@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import pxToDp from './utils/pxToDp'
 import { BackHandler, Animated, Easing, ScrollView, View, Text } from 'react-native'
 import {
   StackNavigator,
@@ -11,7 +12,6 @@ import {
 } from 'react-navigation'
 import { connect } from 'react-redux'
 import SidebarView from './components/common/Sider'
-import Login from './containers/Login'
 import Home from './containers/Home'
 import Category from './containers/Category'
 import Press from './containers/Press'
@@ -23,6 +23,7 @@ import MenuDetail from './page/MenuDetail'
 import CommentDetail from './page/CommentDetail'
 import ReadPage from './page/ReadPage'
 import SearchPage from './page/SearchPage'
+import Login from './page/Login'
 
 const HomeNavigator = TabNavigator(
   {
@@ -78,9 +79,9 @@ const AppDrawerNavigator = DrawerNavigator(
     drawerCloseRoute: 'DrawerClose', 
     drawerToggleRoute: 'DrawerToggle',
     //定义侧边栏抽屉视图
-    drawerWidth:250,
+    drawerWidth:pxToDp(600),
     contentComponent: props =>
-      <View>
+      <View style={{flex: 1}}>
         <SidebarView {...props}/>
       </View>
   },
@@ -94,7 +95,6 @@ const MainNavigator = StackNavigator({
     //     header:null
     // }
   },
-  Login: { screen: Login },
   Bookshelf: { screen: Bookshelf },
   BookDetail: { screen: BookDetail },
   ReadPage: { screen: ReadPage },
@@ -109,6 +109,7 @@ const AppNavigator = StackNavigator(
     Main: { screen: MainNavigator },
     MenuDetail: { screen: MenuDetail },
     CommentDetail: { screen: CommentDetail },
+    Login: {screen: Login}
   },
   {
     headerMode: 'none',

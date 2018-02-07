@@ -6,7 +6,8 @@ export default {
     data: [],
     total: 2,
     page: 1,
-    isSearch: false
+    isSearch: false,
+    isRefreshing: true,
   },
   reducers: {
     update(state, { payload }) {
@@ -14,16 +15,29 @@ export default {
     },  
   },    
   effects: { 
-    *searchData({payload}, { call, put }) {
+    *searchData({payload}, { call, put, select }) {
+      const oldData = yield select(state=> state.search.data)
+      const canFetchMore = yield select(state=> state.search.canFetchMore)
+      var old = oldData
+      if(payload.pageNumber == 1){
+        old = []
+      }
+      yield put({
+        type: 'update',
+        payload: {
+          isRefreshing: true,
+        }
+      })
       const result = yield call(searchServices.searchData, payload)
       if(result.code == '000') {
         yield put({
           type: 'update',
           payload: { 
-            data: result.data.datas,
+            data: [...old, ...result.data.datas],
             total: result.data.totalPage,
             page: result.data.pageNumber,
-            isSearch: true
+            isSearch: true,
+            isRefreshing: false
           }
         })
       }

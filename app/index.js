@@ -13,10 +13,11 @@ import bookshelfModel from './models/bookshelfModel'
 import bookDetailModel from './models/bookDetailModel'
 import commentlModel from './models/commentModel'
 import searchModel from './models/searchModel'
+import loginModel from './models/loginModel'
 
 const app = dva({
   initialState: {},
-  models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel, bookDetailModel, commentlModel, searchModel],
+  models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel, bookDetailModel, commentlModel, searchModel, loginModel],
   onError(e) {
     console.log('onError', e)
   },
