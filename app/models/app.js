@@ -14,10 +14,15 @@ export default {
     },
   },    
   effects: {
-    // *loadStorage(action, { call, put }) {
-    //   const login = yield call(Storage.get, 'login', false)
-    //   yield put(createAction('updateState')({ login, loading: false }))
-    // },
+    *loadStorage(action, { call, put }) {
+      const token = yield call(Storage.get, 'ts-token', false)
+      const uid = yield call(Storage.get, 'ts-uid', false)
+      if(token&&uid) {
+        yield put(createAction('updateState')({ login: true }))
+      }else{
+        yield put(createAction('updateState')({ login: false }))
+      }
+    },
     *login({ payload }, { call, put }) {
       yield put(createAction('updateState')({ fetching: true }))
       const login = yield call(authService.login, payload)
@@ -34,9 +39,9 @@ export default {
   },
   subscriptions: {
     setup({ dispatch }) {
-      // dispatch({ type: 'loadStorage' })
-      Storage.set('ts-token', 'd6b1c0e0b5bad3ce18f4b10aabefbc2a')
-      Storage.set('ts-uid', '365374576770')
+      dispatch({ type: 'loadStorage' })
+      // Storage.set('ts-token', 'd6b1c0e0b5bad3ce18f4b10aabefbc2a')
+      // Storage.set('ts-uid', '365374576770')
     },
   },
 }

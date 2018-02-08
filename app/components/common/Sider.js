@@ -12,12 +12,25 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux'
+import {Storage} from '../../utils'
 /**
  * 自定义侧边
  **/
 class SidebarView extends Component {
   constructor(props) {
     super(props)
+  }
+  //退出登录
+  logout = ()=> {
+    this.props.dispatch({
+      type: 'app/updateState',
+      payload: {
+        login: false
+      }
+    })
+    Storage.remove('ts-token')
+    Storage.remove('ts-uid')
+    this.props.navigation.navigate('Login')
   }
   render() {
     return (
@@ -43,7 +56,7 @@ class SidebarView extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.bottom}>
-            <TouchableOpacity style={styles.bottomBtn}>
+            <TouchableOpacity onPress={this.logout} style={styles.bottomBtn}>
               <SimpleLineIcons style={styles.bottomIcon} name='logout'/>
               <Text style={styles.bottomTxt}>退出登录</Text>
             </TouchableOpacity>

@@ -17,7 +17,8 @@ import loginModel from './models/loginModel'
 
 const app = dva({
   initialState: {},
-  models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel, bookDetailModel, commentlModel, searchModel, loginModel],
+  models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel,
+    bookDetailModel, commentlModel, searchModel, loginModel],
   onError(e) {
     console.log('onError', e)
   },

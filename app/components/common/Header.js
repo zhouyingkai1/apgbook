@@ -20,14 +20,9 @@ import Alert from './Alert'
  **/
 const Header = (props)=> {
   const {title, backTitle, right, left, noBack, isClose} = props
-  // const handlelogin = ()=> {
-  //   props.dispatch({
-  //     type: 'app/updateState',
-  //     payload: {
-  //       loginAlert: true
-  //     }
-  //   })
-  // }
+  const handlelogin = ()=> {
+    props.navigation.navigate('Login')
+  }
   const openDrawer = ()=> {
     props.navigation.navigate('DrawerOpen')
   }
@@ -57,7 +52,7 @@ const Header = (props)=> {
                     style={styles.avatar}/>
                   </TouchableOpacity>
                   :
-                  <TouchableOpacity style={[styles.left]} onPress={()=> openDrawer()}>
+                  <TouchableOpacity style={[styles.left]} onPress={()=> handlelogin()}>
                     <FontIcon style={styles.noneBg} name="user-circle" size={pxToDp(46)} color={'#aaa'} />
                   </TouchableOpacity>
               }

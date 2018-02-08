@@ -99,6 +99,7 @@ const MainNavigator = StackNavigator({
   BookDetail: { screen: BookDetail },
   ReadPage: { screen: ReadPage },
   SearchPage: { screen: SearchPage },
+  
 },  {
   navigationOptions: {
     header: null
@@ -109,7 +110,7 @@ const AppNavigator = StackNavigator(
     Main: { screen: MainNavigator },
     MenuDetail: { screen: MenuDetail },
     CommentDetail: { screen: CommentDetail },
-    Login: {screen: Login}
+    Login: {screen: Login},
   },
   {
     headerMode: 'none',
