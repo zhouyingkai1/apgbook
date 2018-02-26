@@ -16,6 +16,7 @@
     "react-native": "^0.51.0",
     "react-native-blur": "^3.2.2",
     "react-native-drawer": "^2.5.0",
+    "react-native-image-picker": "^0.26.7",
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-modal": "^4.1.1",

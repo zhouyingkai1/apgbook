@@ -51,7 +51,7 @@ const Header = (props)=> {
                 login?
                   <TouchableOpacity style={[styles.left]} onPress={()=> openDrawer()}>
                     <Image 
-                      source={{uri: userInfo.avatar||'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
+                      source={{uri: `${userInfo.avatar}@60w`||'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
                       style={styles.avatar}/>
                   </TouchableOpacity>
                   :

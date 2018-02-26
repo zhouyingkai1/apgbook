@@ -43,7 +43,7 @@ export default async function request(url, options) {
       'ts-token': tsToken || '',
       'ts-uid': tsUid || '',
     },
-    body: JSON.stringify(options.body),
+    body: /upload/.test(url)?options.body:JSON.stringify(options.body),
     method: options.method,
   })
   .then(checkStatus)

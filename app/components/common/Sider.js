@@ -14,6 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux'
 import {Storage} from '../../utils'
 import Toast from 'react-native-root-toast'
+import ImagePicker from 'react-native-image-picker'
 /**
  * 自定义侧边
  **/
@@ -39,14 +40,49 @@ class SidebarView extends Component {
   navigateTo = (page)=> {
     this.props.navigation.navigate(page)
   }
+   photoOptions = {
+    //底部弹出框选项
+    title:'请选择',
+    cancelButtonTitle:'取消',
+    takePhotoButtonTitle:'拍照',
+    chooseFromLibraryButtonTitle:'从相册选择',
+    quality:0.75,
+    allowsEditing:true,
+    noData:false,
+    // customButtons: [
+    //   {name: 'fb', title: 'Choose Photo from Facebook'},
+    // ],
+    storageOptions: {
+      skipBackup: true,
+      path:'images'
+    }
+  }
+  cameraAction = () =>{
+    ImagePicker.showImagePicker(this.photoOptions,(response) =>{
+      if (response.didCancel) {
+        return
+      }
+      // else if (response.customButton) {
+      //   Toast.show('dddd')
+      // }
+      this.props.dispatch({
+        type: 'app/uploadImg',
+        payload: {
+          file: response
+        }
+      })
+    })
+  } 
   render() {
     const {login, userInfo} = this.props.app
     return (
       login?(
         <View style={{flex: 1}}>
-          <Image style={styles.topBg} source={{uri: userInfo.avatar}}/>
+          <Image style={styles.topBg} source={{uri: `${userInfo.avatar}@${pxToDp(600)}`}}/>
           <View style={styles.topMain}>
-            <Image style={styles.avatar} source={{uri: userInfo.avatar}}/>
+            <TouchableOpacity onPress={this.cameraAction}>
+              <Image style={styles.avatar} source={{uri: `${userInfo.avatar}@120`}}/>
+            </TouchableOpacity>
             <Text numberOfLines={1} style={styles.name}>{userInfo.name}</Text>
           </View>  
           <View style={styles.btnList}>
