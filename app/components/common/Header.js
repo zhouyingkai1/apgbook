@@ -15,11 +15,14 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Toast from 'react-native-root-toast'
 import Alert from './Alert'
+import {Storage} from '../../utils'
 /**
  * 自定义导航
  **/
 const Header = (props)=> {
-  const {title, backTitle, right, left, noBack, isClose} = props
+  const {title, backTitle, right, left, noBack, isClose, app} = props
+  const { login, userInfo } = app
+  let avatar = ''
   const handlelogin = ()=> {
     props.navigation.navigate('Login')
   }
@@ -45,11 +48,11 @@ const Header = (props)=> {
           : 
             <View>
               {
-                props.app.login?
+                login?
                   <TouchableOpacity style={[styles.left]} onPress={()=> openDrawer()}>
                     <Image 
-                    source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
-                    style={styles.avatar}/>
+                      source={{uri: userInfo.avatar||'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/30'}}
+                      style={styles.avatar}/>
                   </TouchableOpacity>
                   :
                   <TouchableOpacity style={[styles.left]} onPress={()=> handlelogin()}>

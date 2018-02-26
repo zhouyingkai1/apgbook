@@ -15,3 +15,17 @@ export function login(data) {
     body: data,
   })
 }
+//修改密码
+export function modifyPwd(data) {
+  return request('/member/findBackPwd', {
+    method: 'POST',
+    body: data,
+  })
+}
+//获取用户信息
+export function getUserInfo(data) {
+  return request('/member/userInfo', {
+    method: 'POST',
+    body: data,
+  })
+}

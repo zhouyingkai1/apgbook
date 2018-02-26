@@ -27,7 +27,7 @@ class Rank extends Component {
   render() {
     const {data1, data2, data3, data4, data5} = this.props.rank
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#e9e9e9'}}>
         <Header noBack={true} {...this.props}/>
         <ScrollView style={{flex: 1}}>
           <HomeItem title='畅销榜' type={1} data={data1} {...this.props}/>

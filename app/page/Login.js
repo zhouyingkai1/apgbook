@@ -7,6 +7,10 @@ import theme from '../utils/theme'
 import {TextButton} from '../components'
 import Toast from 'react-native-root-toast'
 class Login extends Component{
+  constructor(props) {
+    super(props)
+    this.timer = null
+  }
   componentWillMount() {
     this.props.dispatch({
       type: 'login/update',
@@ -42,11 +46,11 @@ class Login extends Component{
       }
     })
     this.update('timeNumber', 60)
-    let timer = setInterval(()=> {
+    this.timer = setInterval(()=> {
       const {timeNumber} = this.props.login
       this.update('timeNumber', timeNumber-1)
       if(timeNumber == 0) {
-        clearInterval(timer)
+        clearInterval(this.timer)
       }
     }, 1000)
   }
@@ -69,12 +73,46 @@ class Login extends Component{
       payload: {
         phone,
         pwd,
-        isYzm
+        isYzm,
+        timer: this.timer
       }
     })
   }
+  //修改密码
+  handleModify = ()=> {
+    const {phone, pwd, code, newPwd} = this.props.login
+    if(!phone){
+      return Toast.show('请输入手机号')
+    }else if(!/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(phone)){
+      return Toast.show('请输入正确的手机号')
+    }
+    if(!code){
+      return Toast.show('请输入验证码')
+    }
+    if(!pwd){
+      return Toast.show('请输入密码')
+    }
+    if(pwd !== newPwd){
+      return Toast.show('两次密码输入不一致')
+    }
+    this.props.dispatch({
+      type: 'login/modifyPwd',
+      payload: {
+        phone,
+        pwd,
+        code
+      }
+    })
+    clearInterval(this.timer)
+  }
+  //注册
+  register = ()=> {
+    Toast.show('接口有误 请使用手机验证码登录')
+  }
+  handleModify
   render() {
     const {isYzm, timeNumber, isLogin, isChangePwd} = this.props.login
+    console.log(timeNumber,'timeNumber')
     return(
       <View style={{flex: 1}}>
          <EvilIcons onPress={()=> this.props.navigation.goBack()} name={'close'} style={[styles.back, styles.noBg]}/>  
@@ -141,7 +179,7 @@ class Login extends Component{
                 />
                 <View style={[styles.yzmInput, !isLogin?{borderBottomWidth: pxToDp(1), borderColor: '#c7c7c7'}:null]} >
                   <TextInput 
-                    onChangeText={(val)=> this.update('pwd', val)} 
+                    onChangeText={(val)=> this.update('code', val)} 
                     underlineColorAndroid="transparent" keyboardType='default' 
                     placeholderTextColor='#c7c7c7' 
                     style={[styles.input, {flex: 1}]} 
@@ -156,7 +194,7 @@ class Login extends Component{
                 </View>
                 <TextInput 
                   secureTextEntry={true} 
-                  onChangeText={(val)=> this.update('phone', val)} 
+                  onChangeText={(val)=> this.update('pwd', val)} 
                   underlineColorAndroid="transparent" 
                   keyboardType='default' 
                   placeholderTextColor='#c7c7c7' 
@@ -165,7 +203,7 @@ class Login extends Component{
                 />
                 <TextInput 
                   secureTextEntry={true} 
-                  onChangeText={(val)=> this.update('phone', val)} 
+                  onChangeText={(val)=> this.update('newPwd', val)} 
                   underlineColorAndroid="transparent" 
                   keyboardType='default' 
                   placeholderTextColor='#c7c7c7' 
@@ -176,7 +214,7 @@ class Login extends Component{
               <TextButton 
                 btnStyle={styles.loginBtn} 
                 textStyle={{color: '#fff', fontSize: pxToDp(36)}} 
-                onPress={this.handleLogin} 
+                onPress={isChangePwd?this.handleModify : this.register} 
                 text={isChangePwd?'修改密码':'注册'}
               />
             </View>

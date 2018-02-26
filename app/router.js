@@ -24,6 +24,9 @@ import CommentDetail from './page/CommentDetail'
 import ReadPage from './page/ReadPage'
 import SearchPage from './page/SearchPage'
 import Login from './page/Login'
+import News from './page/News'
+import Collect from './page/Collect'
+import PressDetail from './page/PressDetail'
 
 const HomeNavigator = TabNavigator(
   {
@@ -99,6 +102,9 @@ const MainNavigator = StackNavigator({
   BookDetail: { screen: BookDetail },
   ReadPage: { screen: ReadPage },
   SearchPage: { screen: SearchPage },
+  News: { screen: News },
+  Collect: { screen: Collect },
+  PressDetail: { screen: PressDetail },
   
 },  {
   navigationOptions: {

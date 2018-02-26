@@ -10,7 +10,9 @@ export default {
     phone: '',
     pwd: '',
     isLogin: true,
-    isChangePwd: false
+    isChangePwd: false,
+    code: '',
+    newPwd: ''
   },
   reducers: {
     update(state, { payload }) {
@@ -39,6 +41,9 @@ export default {
         Storage.set('ts-token', result.data.token)
         Storage.set('ts-uid', result.data.uid)
         yield put({
+          type: 'getUserInfo'
+        })        
+        yield put({
           type: 'app/updateState',
           payload: {
             login: true,
@@ -49,6 +54,7 @@ export default {
           actions: [NavigationActions.navigate({ routeName: 'Main' })],
         }))
         Toast.show('登录成功')
+        clearInterval(payload.timer)
       }else{
         if(payload.isYzm){
           Toast.show('验证码错误')
@@ -57,5 +63,33 @@ export default {
         }
       }
     },
+    *getUserInfo(payload, {put, call}) {
+      const result = yield call(loginServices.getUserInfo, {})
+      if(result.code == '000') {
+        Storage.set('userInfo', result.data)
+        yield put({
+          type: 'app/updateState',
+          payload: {
+            userInfo: result.data
+          }
+        })
+      }
+    },
+    *modifyPwd({payload}, {call, put}) {
+      const param =  {mobile: payload.phone, verifyCode: payload.code, code: payload.code, pwd: Base64.encode(payload.pwd) }
+      const result = yield call(loginServices.modifyPwd, param)
+      if(result.code == '000') {
+        Toast.show('密码修改成功')
+        yield put({
+          type: 'update',
+          payload: {
+            timeNumber: 0,
+            isLogin: true
+          }
+        })
+      }else{
+        Toast.show('验证码错误')
+      }
+    }
   },
 }

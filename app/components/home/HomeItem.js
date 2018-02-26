@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity, InteractionM
 import Icon from 'react-native-vector-icons/SimpleLineIcons'
 import pxToDp from '../../utils/pxToDp'
 const HomeItem = (props)=> {
-  const {title, type, data} = props
+  const {title, type, data, noMore = false} = props
   const renderItem = ({item})=> {
     return (
       <TouchableOpacity onPress={()=> requestAnimationFrame(() => props.navigation.navigate('BookDetail', {bookId: item.bookId}))} activeOpacity={0.7} style={styles.item}>
@@ -23,13 +23,22 @@ const HomeItem = (props)=> {
       props.navigation.navigate('Bookshelf', {type, rank: 1, title})
     })
   }
+  const emptyCompenent = ()=> (
+    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+      <Text style={{alignSelf: 'center'}}>暂无相关信息</Text>
+    </View>
+  )
   return (
     <View style={styles.container}> 
       <View style={styles.head}>
         <Text style={styles.title}>{title}</Text>
-        <TouchableOpacity onPress={goListPage} style={styles.more}>
-          <Text style={{color: '#999', fontSize: pxToDp(30)}}>更多 <Icon color={'#999'} name='arrow-right' size={pxToDp(26)}/></Text>
-        </TouchableOpacity>
+        {
+          !noMore?(
+            <TouchableOpacity onPress={goListPage} style={styles.more}>
+              <Text style={{color: '#999', fontSize: pxToDp(30)}}>更多 <Icon color={'#999'} name='arrow-right' size={pxToDp(26)}/></Text>
+            </TouchableOpacity>
+          ): null
+        }
         <View style={styles.line}></View>
       </View>
       <FlatList
@@ -39,6 +48,7 @@ const HomeItem = (props)=> {
         horizontal={true}
         initialNumToRender={4}
         showsHorizontalScrollIndicator= {false}
+        // ListEmptyComponent={emptyCompenent}
       />
     </View>
   )

@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Image, ScrollView, RefreshControl, TouchableOpa
 import { connect } from 'react-redux'
 import pxToDp from '../utils/pxToDp'
 import { Header, HomeItem } from '../components'
-import Icon from 'react-native-vector-icons/Ionicons';
-import Swiper from 'react-native-swiper';
+import Icon from 'react-native-vector-icons/Ionicons'
+import Swiper from 'react-native-swiper'
 import theme from '../utils/theme'
 class Home extends Component {
   static navigationOptions = {
@@ -72,6 +72,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#e9e9e9'
   },
   banner: {
     width: theme.screenWidth,

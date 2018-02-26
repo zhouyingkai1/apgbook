@@ -18,6 +18,8 @@ import BookItem from './bookshelf/BookItem'
 import BookMenu from './bookDetail/BookMenu'
 //书本 评论列表
 import Comment from './bookDetail/Comment'
+// 出版社列表
+import PressList from './press/PressList'
 module.exports={
   TextButton,
   Touchable,
@@ -32,5 +34,6 @@ module.exports={
   Alert,
   TabView,
   BookMenu,
-  Comment
+  Comment,
+  PressList
 }

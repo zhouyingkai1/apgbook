@@ -6,7 +6,8 @@ export default {
     login: false,
     loading: true,
     fetching: false,
-    loginAlert: false
+    loginAlert: false,
+    userInfo: {}
   },
   reducers: {
     updateState(state, { payload }) {
@@ -17,8 +18,9 @@ export default {
     *loadStorage(action, { call, put }) {
       const token = yield call(Storage.get, 'ts-token', false)
       const uid = yield call(Storage.get, 'ts-uid', false)
+      const userInfo = yield call(Storage.get, 'userInfo', false)
       if(token&&uid) {
-        yield put(createAction('updateState')({ login: true }))
+        yield put(createAction('updateState')({ login: true, userInfo }))
       }else{
         yield put(createAction('updateState')({ login: false }))
       }

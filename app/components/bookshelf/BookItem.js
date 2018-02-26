@@ -6,12 +6,12 @@ import {fomatDate} from '../../utils'
 const BookItem = (props)=> {
   const {item} = props
   
-  const goBookDetail = (bookId)=> {
-    requestAnimationFrame(()=> props.navigation.navigate('ReadPage', {bookId}))
+  const goBookDetail = (bookId, bookName)=> {
+    requestAnimationFrame(()=> props.navigation.navigate('ReadPage', {bookId, bookName}))
   }
   return (
     <View style={styles.container}> 
-      <TouchableOpacity onPress={()=> requestAnimationFrame(() => props.navigation.navigate('BookDetail', {bookId: item.bookId}))} activeOpacity={0.7} style={styles.item}>
+      <TouchableOpacity onPress={()=> requestAnimationFrame(() => props.navigation.navigate('BookDetail', {bookId: item.bookId, bookName: item.bookName}))} activeOpacity={0.7} style={styles.item}>
         <View style={styles.shadow}>
           <Image style={styles.bookImg} source={{uri: item.bookCover + '@174w'}}/>
         </View>
@@ -26,7 +26,7 @@ const BookItem = (props)=> {
             : <Text style={styles.txt} numberOfLines={1}><Text style={styles.gray}>售价：</Text>0</Text>            
           }
         </View>
-        <TouchableOpacity activeOpacity={0.6} onPress={()=> goBookDetail(item.bookId)} style={styles.readNow}>
+        <TouchableOpacity activeOpacity={0.6} onPress={()=> goBookDetail(item.bookId, item.bookName)} style={styles.readNow}>
           <Text style={{color: '#fff', fontSize: pxToDp(28)}}>立即阅读 <Icon color={'#fff'} style={{backgroundColor: 'rgba(0,0,0,0)'}} name='arrow-right' size={pxToDp(26)}/></Text>
         </TouchableOpacity>
       </TouchableOpacity>

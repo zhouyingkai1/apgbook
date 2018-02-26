@@ -14,11 +14,14 @@ import bookDetailModel from './models/bookDetailModel'
 import commentlModel from './models/commentModel'
 import searchModel from './models/searchModel'
 import loginModel from './models/loginModel'
+import newsModel from './models/newsModel'
+import pressModel from './models/pressModel'
+import pressDetailModel from './models/pressDetailModel'
 
 const app = dva({
   initialState: {},
   models: [appModel, routerModel, homeModel, categoryModel, rankModel, bookshelfModel,
-    bookDetailModel, commentlModel, searchModel, loginModel],
+    bookDetailModel, commentlModel, searchModel, loginModel, newsModel, pressModel, pressDetailModel],
   onError(e) {
     console.log('onError', e)
   },

@@ -13,6 +13,7 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import {connect} from 'react-redux'
 import {Storage} from '../../utils'
+import Toast from 'react-native-root-toast'
 /**
  * 自定义侧边
  **/
@@ -25,32 +26,39 @@ class SidebarView extends Component {
     this.props.dispatch({
       type: 'app/updateState',
       payload: {
-        login: false
+        login: false,
+        userInfo: {}
       }
     })
     Storage.remove('ts-token')
     Storage.remove('ts-uid')
+    Storage.remove('userInfo')
     this.props.navigation.navigate('Login')
   }
+  //跳转
+  navigateTo = (page)=> {
+    this.props.navigation.navigate(page)
+  }
   render() {
+    const {login, userInfo} = this.props.app
     return (
-      this.props.app.login?(
+      login?(
         <View style={{flex: 1}}>
-          <Image style={styles.topBg} source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg'}}/>
+          <Image style={styles.topBg} source={{uri: userInfo.avatar}}/>
           <View style={styles.topMain}>
-            <Image style={styles.avatar} source={{uri: 'http://images.mizholdings.com/a0465f5d-b6c2-4000-8e53-f4b30b9fa7aa.jpg?imageView2/2/w/260'}}/>
-            <Text numberOfLines={1} style={styles.name}>13625695226</Text>
+            <Image style={styles.avatar} source={{uri: userInfo.avatar}}/>
+            <Text numberOfLines={1} style={styles.name}>{userInfo.name}</Text>
           </View>  
           <View style={styles.btnList}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={()=> this.navigateTo('News')}>
               <FontAwesome style={[styles.icon]} name='bell-o'/>
               <Text style={styles.btnTxt}>我的消息</Text>      
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}> 
+            <TouchableOpacity onPress={()=> Toast.show('暂无图书')} style={styles.btn}> 
               <SimpleLineIcons style={[styles.icon, {fontSize: pxToDp(35), marginLeft: pxToDp(2)}]} name='book-open'/>
               <Text style={styles.btnTxt}>我的图书</Text>      
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity style={styles.btn} onPress={()=> this.navigateTo('Collect')}>
               <FontAwesome style={[styles.icon]} name='heart-o'/>
               <Text style={styles.btnTxt}>我的收藏</Text>      
             </TouchableOpacity>
