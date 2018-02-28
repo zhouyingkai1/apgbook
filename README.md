@@ -1,17 +1,23 @@
-### 项目介绍
+## 项目介绍
+
 使用 react-native + dva + react-navigation 开发的一款书房类项目。
 
 项目接口及UI使用的是[时光流影](http:www.timeface.cn)开发的[时代书房](http://www.apgbook.com/timeread)项目
 
 此项目仅用来学习交流，所以购买等操作都没有开发
-### 部分运行效果图（更多图片在文末）
+
+## 部分运行效果图（更多图片在文末）
+
 ![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f8385886d?w=375&h=689&f=png&s=233731)
 
 ![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f81c0a970?w=375&h=689&f=png&s=150130)
-### 开源地址
+
+## 开源地址
+
 [github](https://github.com/zhouyingkai1/apgbook)
 
-### 如何运行
+## 如何运行
+
 ```js
 克隆项目
 npm i
@@ -19,7 +25,7 @@ react-native link
 使用Xcode打开项目，运行即可
 ```
 
-### 使用的技术及框架
+## 使用的技术及框架
 
 * [dva.js](https://github.com/dvajs/dva)
 
@@ -37,11 +43,11 @@ react-native link
 
 * react-native-image-picker: "^0.26.7",
 
-### 开始
+## 开始
 
 项目框架搭建参考的是[a React Native starter powered by dva and react-navigation](https://github.com/nihgwu/react-native-dva-starter)
 
-### 项目结构
+## 项目结构
 
 ```js
 |-- android 
@@ -65,18 +71,21 @@ react-native link
 |-- index.js // 主入口
 ```
 
-### 遇到的坑
+
+## 遇到的坑
 
 1. 获取验证码的倒计时，清除倒计时的时机要考虑周全
 2. 书籍阅读时返回的是html拼接的，没有好的办法去完成翻页效果，所以用的是Webview
 3. 数据的缓存与刷新时机（还未考虑全）
 
-### todo
+## todo
+
 1. 缓存数据优化
 2. 分享
 3. 代码优化
 
-### 总结
+
+## 总结
 
 首先非常感谢dva的作者[sorrycc](https://github.com/sorrycc)，这个项目真的很赞。
 
