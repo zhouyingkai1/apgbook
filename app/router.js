@@ -10,6 +10,10 @@ import {
   DrawerNavigator ,
   DrawerItems
 } from 'react-navigation'
+import {
+  createReduxBoundAddListener,
+  createReactNavigationReduxMiddleware,
+} from 'react-navigation-redux-helpers'
 import { connect } from 'react-redux'
 import SidebarView from './components/common/Sider'
 import Home from './containers/Home'
@@ -41,6 +45,7 @@ const HomeNavigator = TabNavigator(
     swipeEnabled: false,
     animationEnabled: false,
     lazyLoad: true,
+    lazy: true,
     tabBarOptions: {
       labelStyle: {
         fontSize: 12,
@@ -161,9 +166,14 @@ function getCurrentScreen(navigationState) {
   }
   return route.routeName
 }
-
+export const routerMiddleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.router
+)
+const addListener = createReduxBoundAddListener('root')
 class Router extends PureComponent {
   componentWillMount() {
+    // this.props.dispatch(NavigationActions.init());
     BackHandler.addEventListener('hardwareBackPress', this.backHandle)
   }
 
@@ -186,7 +196,11 @@ class Router extends PureComponent {
   render() {
     const { dispatch, app, router } = this.props
 
-    const navigation = addNavigationHelpers({ dispatch, state: router })
+    const navigation = addNavigationHelpers({
+      dispatch,
+      state: router,
+      addListener,
+    })
     return <AppNavigator navigation={navigation} />
   }
 }
