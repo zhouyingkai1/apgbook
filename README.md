@@ -74,6 +74,7 @@ react-native link
 ### todo
 1. 缓存数据优化
 2. 分享
+3. 代码优化
 
 ### 总结
 
