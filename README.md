@@ -5,7 +5,7 @@
 
 此项目仅用来学习交流，所以购买等操作都没有开发
 ### 部分运行效果图（更多图片在文末）
-![index](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951fd338f?w=371&h=686&f=gif&s=7115361)
+![index](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951fd338f)
 ![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f8385886d?w=375&h=689&f=png&s=233731)
 
 ### 开源地址
@@ -83,12 +83,12 @@ react-native link
 
 ## 截图（随便找了个gif制作软件，没有付费的话gif只能播放一遍，不能重复播放。。可以复制gif地址，在浏览器打开播放）
 
-![detail](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951e888e7?w=373&h=687&f=gif&s=7870463) ![index](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951fd338f?w=371&h=686&f=gif&s=7115361)
+![detail](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951e888e7) ![index](https://user-gold-cdn.xitu.io/2018/2/28/161da5b951fd338f)
 
-![login](https://user-gold-cdn.xitu.io/2018/2/28/161da5b960b90e81?w=370&h=689&f=gif&s=10995113) ![drawer](https://user-gold-cdn.xitu.io/2018/2/28/161da5b955ccc08d?w=374&h=685&f=gif&s=8251176)
+![login](https://user-gold-cdn.xitu.io/2018/2/28/161da5b960b90e81) ![drawer](https://user-gold-cdn.xitu.io/2018/2/28/161da5b955ccc08d)
 
-![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f81c0a970?w=375&h=689&f=png&s=150130)
-![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f81e8e7f5?w=375&h=689&f=png&s=68580)
-![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f83410f55?w=375&h=689&f=png&s=208062)
-![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f837aa2c4?w=375&h=689&f=png&s=153547)
-![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f8385886d?w=375&h=689&f=png&s=233731)
+![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f81c0a970)
+![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f81e8e7f5)
+![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f83410f55)
+![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f837aa2c4)
+![](https://user-gold-cdn.xitu.io/2018/2/28/161da79f8385886d)
