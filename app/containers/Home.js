@@ -6,6 +6,7 @@ import { Header, HomeItem } from '../components'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Swiper from 'react-native-swiper'
 import theme from '../utils/theme'
+import Toast from 'react-native-root-toast'
 class Home extends Component {
   static navigationOptions = {
     headerTitle: '首页',
@@ -17,7 +18,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true
+      show: true,
+      txt: 111111
     };
   }
   openDrawer = ()=> {
@@ -33,6 +35,9 @@ class Home extends Component {
         isRefreshing: true
       }
     })
+    this.props.dispatch({type: 'home/getBookData'})
+  }
+  componentDidMount() {
     this.props.dispatch({type: 'home/getBookData'})
   }
   render() {

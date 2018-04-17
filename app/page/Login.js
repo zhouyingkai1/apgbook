@@ -227,7 +227,7 @@ class Login extends Component{
             this.update('isChangePwd', false)
           }} textStyle={{color: theme.mainColor, fontSize: pxToDp(26)}} text={isLogin?'立即注册':'立即登录'}/>
         </View>
-        <Image style={styles.bg} source={{uri: 'http://static.timeface.cn/times/5af6fbd74a9aad326af1e83f5c27e41f.jpg'}}/>
+        <Image style={styles.bg} source={require('../images/bg.jpg')}/>
       </View>
     )
   }

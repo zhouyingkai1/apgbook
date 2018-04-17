@@ -162,6 +162,9 @@ class BookDetail extends Component {
   }
   // 保存评论内容
   updateCommentVal = value=> this.update('commentVal', value)
+  handleBuy = ()=> {
+    Toast.show('学习项目，暂无开发购买')
+  }
   render() {
     const {params} = this.props.navigation.state
     const {visible, bookInfo, tab, hotBook, hotBookIndex, isRefreshing, menu, commentVal, comment, replyInfo} = this.props.bookdetail
@@ -211,7 +214,7 @@ class BookDetail extends Component {
                 textStyle={{color: '#000'}} 
                 btnStyle={[styles.btn, styles.readBtn]}
               />
-              {bookInfo.discountPrice&&<TextButton text='购买' textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>||null}
+              {bookInfo.discountPrice&&<TextButton text='购买' onPress={()=> this.handleBuy()} textStyle={{color: '#000'}} btnStyle={[styles.btn, styles.buyBtn]}/>||null}
             </View>
           </View>
             {/* 中间 tab 栏 */}

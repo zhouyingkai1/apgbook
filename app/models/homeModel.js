@@ -3,7 +3,7 @@ import { Storage } from '../utils'
 export default {
   namespace: 'home',
   state: {
-    data: Storage.get('homeData', {}),
+    data: {},
     isRefreshing: false
   },
   reducers: {

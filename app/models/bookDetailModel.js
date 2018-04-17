@@ -73,13 +73,15 @@ export default {
             }
           }
           return item
-        })
+        }) 
         yield put({
           type: 'update',
           payload: { 
             comment: newComment
           }
         })
+      } else {
+        Toast.show('请前往登录', {position: pxToDp(650)})
       }
     },
     *bookCatalog({payload}, { call, put }) {
@@ -112,6 +114,8 @@ export default {
           }
         })
         Storage.set(`bookInfo(${bookInfo.bookId})`, bookInfo)
+      } else {
+        Toast.show('请前往登录', {position: pxToDp(650)})
       }
     },
     *submitComment({payload}, {call, put, select}) {
@@ -141,6 +145,8 @@ export default {
             bookInfo
           }
         })
+      } else {
+        Toast.show('请前往登录', {position: pxToDp(650)})
       }
     },
     *deleteComment({payload}, {call, put, select}) {

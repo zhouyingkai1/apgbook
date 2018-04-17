@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -604,6 +605,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		32A93E902085868F005A385A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A4C23F032F1D4991BB93660D /* libRNVectorIcons.a */,
+				2ACD3E2C2ED8447FACEAB8DB /* libBVLinearGradient.a */,
+				863AD029A857455C893666BE /* libRNBlur.a */,
+				9CDC3AF9611B4688BABD0D55 /* libRCTWKWebView.a */,
+				8C97C48E521847F3B4159051 /* libRNImagePicker.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,6 +678,7 @@
 				00E356EF1AD99517003FC87E /* mzCoachRNTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2886961FA2634EAB8FE0536A /* Resources */,
+				32A93E902085868F005A385A /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -719,7 +733,8 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = Q55W99738H;
+						DevelopmentTeam = 92F4G53AMP;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1189,9 +1204,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = Q55W99738H;
+				DEVELOPMENT_TEAM = 92F4G53AMP;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1215,8 +1233,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.apgBook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apgBook;
 				PRODUCT_NAME = mzCoachRN;
+				PROVISIONING_PROFILE = "8ae1b36e-94c3-4fca-95ed-32d96bc24ebf";
+				PROVISIONING_PROFILE_SPECIFIER = rn_dis;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1225,8 +1245,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q55W99738H;
+				DEVELOPMENT_TEAM = 92F4G53AMP;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1250,8 +1273,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.apgBook;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apgBook;
 				PRODUCT_NAME = mzCoachRN;
+				PROVISIONING_PROFILE = "8ae1b36e-94c3-4fca-95ed-32d96bc24ebf";
+				PROVISIONING_PROFILE_SPECIFIER = rn_dis;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

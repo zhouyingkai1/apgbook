@@ -104,7 +104,7 @@ class SidebarView extends Component {
               <SimpleLineIcons style={styles.bottomIcon} name='logout'/>
               <Text style={styles.bottomTxt}>退出登录</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.bottomBtn}>
+            <TouchableOpacity onPress={()=> Toast.show('假装清理干净')} style={styles.bottomBtn}>
               <Ionicons style={[styles.bottomIcon, {fontSize: pxToDp(46)}]} name='ios-backspace-outline'/>
               <Text style={styles.bottomTxt}>清除缓存</Text>
             </TouchableOpacity>
@@ -116,7 +116,7 @@ class SidebarView extends Component {
             <Image style={styles.logoImg} source={require('../../images/logo.png')}/>
             <TextButton onPress={()=> this.props.navigation.navigate('Login')} btnStyle={styles.btnStyle} textStyle={styles.textStyle} text='点击登录'/>
           </View>
-          <Image style={styles.bg} source={{uri: 'http://static.timeface.cn/times/5af6fbd74a9aad326af1e83f5c27e41f.jpg'}}/>
+          <Image style={styles.bg} source={require('../../images/bg.jpg')}/>
         </View>
       )
     )
